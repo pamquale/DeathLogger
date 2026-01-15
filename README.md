@@ -46,15 +46,6 @@ An advanced death history mod. Keeps track of your deaths, restores inventory la
 - **Right-click** on a death entry for restore/delete options
 - **Middle-click** on items to spawn (Creative) or copy `/give` command
 
-## 🛠️ Server Commands
-
-```
-/deathlogger list <player> [search]    — List deaths for a player
-/deathlogger view <player>             — Open death viewer
-/deathlogger restore <player> <index>  — Restore specific death
-/deathlogger restore <player> latest   — Restore most recent death
-```
-
 ## 📄 License
 
 MIT License — See [LICENSE](LICENSE) for details.
