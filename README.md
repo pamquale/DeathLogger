@@ -1,10 +1,7 @@
-# DeathLogger
-
 > 🔀 **This is a fork of [DeathLog](https://github.com/glisco03/deathlog) by glisco03, updated for Minecraft newer versions with new features and improvements.**
 
 [![GitHub release](https://img.shields.io/github/v/release/pamquale/deathlogger?logo=github&style=for-the-badge)](https://github.com/pamquale/deathlogger/releases)
 [![Minecraft](https://img.shields.io/badge/Minecraft-1.21.4-green?style=for-the-badge)](https://minecraft.net)
-[![Fabric](https://img.shields.io/badge/Fabric-Mod-blue?style=for-the-badge)](https://fabricmc.net)
 
 An advanced death history mod. Keeps track of your deaths, restores inventory layouts, and saves coordinates. Essential for any survival world.
 
@@ -20,10 +17,11 @@ An advanced death history mod. Keeps track of your deaths, restores inventory la
 
 ## 📸 Screenshots
 
-*Screenshots coming soon*
-
-<!-- ![Main Screen](docs/screenshot_main.png) -->
-<!-- ![Death Details](docs/screenshot_details.png) -->
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/ad4d85f6-dcd9-4cc7-a5b7-68f82aafd19b" alt="Main Screen" width="600" />
+  <br/><br/>
+  <img src="https://github.com/user-attachments/assets/09af8ea3-6821-44e7-b9c5-67d365508dae" alt="Detail View" width="600" />
+</div>
 
 ## 📥 Installation
 
