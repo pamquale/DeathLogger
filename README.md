@@ -1,6 +1,6 @@
 # DeathLogger
 
-> 🔀 **This is a fork of [DeathLog](https://github.com/glisco03/deathlog) by glisco03, updated for Minecraft 1.21.4 with new features and improvements.**
+> 🔀 **This is a fork of [DeathLog](https://github.com/glisco03/deathlog) by glisco03, updated for Minecraft newer versions with new features and improvements.**
 
 [![GitHub release](https://img.shields.io/github/v/release/pamquale/deathlogger?logo=github&style=for-the-badge)](https://github.com/pamquale/deathlogger/releases)
 [![Minecraft](https://img.shields.io/badge/Minecraft-1.21.4-green?style=for-the-badge)](https://minecraft.net)
@@ -13,10 +13,10 @@ An advanced death history mod. Keeps track of your deaths, restores inventory la
 - 🎒 **Inventory Preview** — Full inventory snapshot at the moment of death, including armor and offhand
 - 📍 **Death Coordinates** — Exact location with dimension info for easy navigation back
 - 🔍 **Searchable History** — Filter deaths by time, death message, or location
-- 🔄 **Inventory Restoration** — Restore items via commands (server) or spawn in Creative mode
+- 🔄 **Inventory Restoration** — Restore items via GUI
 - 📦 **Container Preview** — View contents of Shulker Boxes and Bundles
 - 📸 **Screenshot Support** — Optional automatic screenshots linked to deaths
-- 🖥️ **Server Support** — Works both client-side and server-side
+- 🖥️ **Server Support** — **NOTE THAT I'VE DIDNT TOUCHED SERVER SIDE OF THIS MOD**
 
 ## 📸 Screenshots
 
@@ -53,4 +53,4 @@ MIT License — See [LICENSE](LICENSE) for details.
 ## 🙏 Credits
 
 - **glisco03** — Original [DeathLog](https://github.com/glisco03/deathlog) author
-- **Alexander** — Fork maintainer, 1.21.4 update, new features
+- **pamquale** — Fork maintainer, 1.21.4 update, new features
