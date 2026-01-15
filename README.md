@@ -53,4 +53,4 @@ MIT License — See [LICENSE](LICENSE) for details.
 ## 🙏 Credits
 
 - **glisco03** — Original [DeathLog](https://github.com/glisco03/deathlog) author
-- **pamquale** — Fork maintainer, 1.21.4 update, new features
+- **pamquale** — Fork maintainer, new version updates, new features
