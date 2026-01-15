@@ -49,6 +49,7 @@
   "text.deathlog.no_info_selected_hint": "Select a death info from\nthe list to get started",
 
   "text.deathlog.death_screenshot": "Death Screenshot",
+  "text.deathlog.scroll_hint": "▼ Scroll down for Screenshot & Container Loot ▼",
   "text.deathlog.extra_containers": "Container Contents",
   "text.deathlog.container_empty": "Empty",
 

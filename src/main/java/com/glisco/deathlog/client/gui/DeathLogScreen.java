@@ -237,6 +237,12 @@ public class DeathLogScreen extends BaseUIModelScreen<FlowLayout> {
                 itemContainer.child(this.makeItem(inventory.get(36), Insets.none()).positioning(Positioning.absolute(186, 8)));
             }
             
+            // Scroll hint label
+            panel.child(Components.label(Text.translatable("text.deathlog.scroll_hint"))
+                    .color(Color.ofFormatting(Formatting.DARK_GRAY))
+                    .horizontalTextAlignment(io.wispforest.owo.ui.core.HorizontalAlignment.CENTER)
+                    .margins(Insets.of(8, 5, 0, 0)));
+            
             // Add screenshot display under inventory
             addScreenshotDisplay(panel, info);
             
