@@ -39,5 +39,8 @@
     "Uses a less reliable but more sensitive\n",
     "method of detecting deaths that works\n",
     "with protocol translators like ViaFabric"
-  ]
+  ],
+
+  "deathlogger.betterstats.menubar": "Deaths",
+  "deathlogger.betterstats.open_deaths": "View Death Log"
 }

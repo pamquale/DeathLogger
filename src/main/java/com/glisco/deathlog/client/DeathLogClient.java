@@ -2,6 +2,7 @@ package com.glisco.deathlog.client;
 
 import com.glisco.deathlog.DeathLogCommon;
 import com.glisco.deathlog.client.gui.DeathLogScreen;
+import com.glisco.deathlog.client.integration.BetterStatsIntegration;
 import com.glisco.deathlog.network.DeathLogPackets;
 import com.glisco.deathlog.storage.DirectDeathLogStorage;
 import net.fabricmc.api.ClientModInitializer;
@@ -12,6 +13,7 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.screen.v1.ScreenEvents;
 import net.fabricmc.fabric.api.client.screen.v1.Screens;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.StatsScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -52,6 +54,11 @@ public class DeathLogClient implements ClientModInitializer {
                 openScreen(getClientStorage());
             }
         });
+
+        // Initialize BetterStats integration if the mod is present
+        if (FabricLoader.getInstance().isModLoaded("betterstats")) {
+            BetterStatsIntegration.register();
+        }
 
         DeathLogPackets.initClient();
     }
