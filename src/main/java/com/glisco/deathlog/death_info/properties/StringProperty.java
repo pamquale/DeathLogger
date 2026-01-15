@@ -53,7 +53,7 @@ public class StringProperty implements DeathInfoProperty {
         public static final Type INSTANCE = new Type();
 
         private Type() {
-            super("deathlog.deathinfoproperty.string", Identifier.of("deathlog", "string"));
+            super("deathlogger.deathinfoproperty.string", Identifier.of("deathlogger", "string"));
         }
 
         @Override

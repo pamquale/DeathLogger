@@ -63,7 +63,7 @@ public class DeathLogScreen extends BaseUIModelScreen<FlowLayout> {
     private Identifier screenshotTextureId;
 
     public DeathLogScreen(Screen parent, DirectDeathLogStorage storage) {
-        super(FlowLayout.class, DataSource.asset(Identifier.of("deathlog", "deathlog")));
+        super(FlowLayout.class, DataSource.asset(Identifier.of("deathlogger", "deathlogger")));
         this.parent = parent;
         this.storage = storage;
 
@@ -98,11 +98,11 @@ public class DeathLogScreen extends BaseUIModelScreen<FlowLayout> {
         });
 
         rootComponent.childById(ButtonComponent.class, "config-button").onPress(button -> {
-            this.client.setScreen(ConfigScreen.getProvider("deathlog").apply(this));
+            this.client.setScreen(ConfigScreen.getProvider("deathlogger").apply(this));
         });
 
         this.uiAdapter.rootComponent.childById(LabelComponent.class, "death-count-label").text(
-                Text.translatable("text.deathlog.death_list_title", this.storage.getDeathInfoList().size())
+                Text.translatable("text.deathlogger.death_list_title", this.storage.getDeathInfoList().size())
         );
 
         this.buildDeathList();
@@ -155,13 +155,13 @@ public class DeathLogScreen extends BaseUIModelScreen<FlowLayout> {
                                     dropdown.zIndex(100);
 
                                     if (this.canRestore) {
-                                        dropdown.button(Text.translatable("text.deathlog.action.restore"), dropdown_ -> {
+                                        dropdown.button(Text.translatable("text.deathlogger.action.restore"), dropdown_ -> {
                                             this.storage.restore(infoIndex);
                                             dropdown.remove();
                                         });
                                     }
 
-                                    dropdown.button(Text.translatable("text.deathlog.action.delete"), dropdown_ -> {
+                                    dropdown.button(Text.translatable("text.deathlogger.action.delete"), dropdown_ -> {
                                         this.storage.delete(deathInfo);
                                         this.buildDeathList();
                                         dropdown.remove();
@@ -183,7 +183,7 @@ public class DeathLogScreen extends BaseUIModelScreen<FlowLayout> {
             panel.clearChildren();
 
             if (info.isPartial()) {
-                panel.child(Components.label(Text.translatable("text.deathlog.death_info_loading")).margins(Insets.top(15)));
+                panel.child(Components.label(Text.translatable("text.deathlogger.death_info_loading")).margins(Insets.top(15)));
                 return;
             }
 
@@ -209,7 +209,7 @@ public class DeathLogScreen extends BaseUIModelScreen<FlowLayout> {
             panel.child(itemContainer = Containers.verticalFlow(Sizing.content(), Sizing.content()));
             itemContainer.margins(Insets.top(5));
 
-            itemContainer.child(Components.texture(Identifier.of("deathlog", "textures/gui/inventory_overlay.png"), 0, 0, 210, 107));
+            itemContainer.child(Components.texture(Identifier.of("deathlogger", "textures/gui/inventory_overlay.png"), 0, 0, 210, 107));
 
             FlowLayout armorFlow;
             itemContainer.child(armorFlow = Containers.verticalFlow(Sizing.content(), Sizing.content()));
@@ -238,7 +238,7 @@ public class DeathLogScreen extends BaseUIModelScreen<FlowLayout> {
             }
             
             // Scroll hint label
-            panel.child(Components.label(Text.translatable("text.deathlog.scroll_hint"))
+            panel.child(Components.label(Text.translatable("text.deathlogger.scroll_hint"))
                     .color(Color.ofFormatting(Formatting.DARK_GRAY))
                     .horizontalTextAlignment(io.wispforest.owo.ui.core.HorizontalAlignment.CENTER)
                     .margins(Insets.of(8, 5, 0, 0)));
@@ -271,7 +271,7 @@ public class DeathLogScreen extends BaseUIModelScreen<FlowLayout> {
                     List<ItemStack> contents = containerComponent.stream().toList();
                     if (!contents.isEmpty() && contents.stream().anyMatch(s -> !s.isEmpty())) {
                         if (!hasContainers) {
-                            panel.child(Components.label(Text.translatable("text.deathlog.extra_containers"))
+                            panel.child(Components.label(Text.translatable("text.deathlogger.extra_containers"))
                                     .shadow(true)
                                     .margins(Insets.of(15, 5, 0, 0)));
                             hasContainers = true;
@@ -288,7 +288,7 @@ public class DeathLogScreen extends BaseUIModelScreen<FlowLayout> {
                     List<ItemStack> contents = bundleComponent.stream().toList();
                     if (!contents.isEmpty()) {
                         if (!hasContainers) {
-                            panel.child(Components.label(Text.translatable("text.deathlog.extra_containers"))
+                            panel.child(Components.label(Text.translatable("text.deathlogger.extra_containers"))
                                     .shadow(true)
                                     .margins(Insets.of(15, 5, 0, 0)));
                             hasContainers = true;
@@ -323,7 +323,7 @@ public class DeathLogScreen extends BaseUIModelScreen<FlowLayout> {
         List<ItemStack> nonEmptyContents = contents.stream().filter(s -> !s.isEmpty()).toList();
         
         if (nonEmptyContents.isEmpty()) {
-            containerSection.child(Components.label(Text.translatable("text.deathlog.container_empty"))
+            containerSection.child(Components.label(Text.translatable("text.deathlogger.container_empty"))
                     .color(Color.ofFormatting(Formatting.GRAY))
                     .margins(Insets.of(3, 0, 0, 0)));
         } else {
@@ -370,7 +370,7 @@ public class DeathLogScreen extends BaseUIModelScreen<FlowLayout> {
         if (!stack.isEmpty()) {
             var tooltip = new ArrayList<>(stack.getTooltip(Item.TooltipContext.DEFAULT, client.player, client.options.advancedItemTooltips ? TooltipType.ADVANCED : TooltipType.BASIC));
             
-            tooltip.add(Text.translatable(this.client.player.isCreative() ? "text.deathlog.action.give_item.spawn" : "text.deathlog.action.give_item.copy_give"));
+            tooltip.add(Text.translatable(this.client.player.isCreative() ? "text.deathlogger.action.give_item.spawn" : "text.deathlogger.action.give_item.copy_give"));
             item.tooltip(tooltip);
 
             item.mouseDown().subscribe((mouseX, mouseY, button) -> {
@@ -468,7 +468,7 @@ public class DeathLogScreen extends BaseUIModelScreen<FlowLayout> {
             
             // Create texture
             screenshotTexture = new NativeImageBackedTexture(image);
-            screenshotTextureId = Identifier.of("deathlog", "death_screenshot_" + System.currentTimeMillis());
+            screenshotTextureId = Identifier.of("deathlogger", "death_screenshot_" + System.currentTimeMillis());
             MinecraftClient.getInstance().getTextureManager().registerTexture(screenshotTextureId, screenshotTexture);
             
             // Calculate display size (max width 200, maintain aspect ratio)
@@ -485,7 +485,7 @@ public class DeathLogScreen extends BaseUIModelScreen<FlowLayout> {
             }
             
             // Add screenshot section
-            panel.child(Components.label(Text.translatable("text.deathlog.death_screenshot"))
+            panel.child(Components.label(Text.translatable("text.deathlogger.death_screenshot"))
                     .shadow(true)
                     .margins(Insets.of(10, 5, 0, 0)));
             
@@ -516,6 +516,6 @@ public class DeathLogScreen extends BaseUIModelScreen<FlowLayout> {
     }
 
     static {
-        UIParsing.registerFactory(Identifier.of("deathlog", "death-list-entry-container"), element -> new DeathListEntryContainer());
+        UIParsing.registerFactory(Identifier.of("deathlogger", "death-list-entry-container"), element -> new DeathListEntryContainer());
     }
 }

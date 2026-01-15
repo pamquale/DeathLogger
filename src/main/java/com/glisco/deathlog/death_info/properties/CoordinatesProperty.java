@@ -29,7 +29,7 @@ public class CoordinatesProperty implements DeathInfoProperty {
 
     @Override
     public Text formatted() {
-        return Text.translatable("deathlog.deathinfoproperty.coordinates.value", coordinates.getX(), coordinates.getY(), coordinates.getZ());
+        return Text.translatable("deathlogger.deathinfoproperty.coordinates.value", coordinates.getX(), coordinates.getY(), coordinates.getZ());
     }
 
     @Override
@@ -42,7 +42,7 @@ public class CoordinatesProperty implements DeathInfoProperty {
         public static final Type INSTANCE = new Type();
 
         private Type() {
-            super("deathlog.deathinfoproperty.coordinates", Identifier.of("deathlog", "coordinates"));
+            super("deathlogger.deathinfoproperty.coordinates", Identifier.of("deathlogger", "coordinates"));
         }
 
         @Override

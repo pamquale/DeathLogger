@@ -35,10 +35,10 @@ public class ClientDeathLogStorage extends BaseDeathLogStorage implements Direct
                         : client.getCurrentServerEntry().name
         ).substring(0, 10);
 
-        this.deathLogFile = FabricLoader.getInstance().getGameDir().resolve("deathlog").resolve("deaths_" + worldSuffix + ".dat").toFile();
+        this.deathLogFile = FabricLoader.getInstance().getGameDir().resolve("deathlogger").resolve("deaths_" + worldSuffix + ".dat").toFile();
         this.deathInfos = load(client.world.getRegistryManager(), deathLogFile).join();
 
-        var deathLogDir = FabricLoader.getInstance().getGameDir().resolve("deathlog").toAbsolutePath();
+        var deathLogDir = FabricLoader.getInstance().getGameDir().resolve("deathlogger").toAbsolutePath();
 
         if (!Files.exists(deathLogDir) && !deathLogDir.toFile().mkdir()) {
             raiseError("Failed to create directory");
@@ -65,7 +65,7 @@ public class ClientDeathLogStorage extends BaseDeathLogStorage implements Direct
         deathInfo.setProperty(DeathInfo.INVENTORY_KEY, new InventoryProperty(player.getInventory()));
 
         deathInfo.setProperty(DeathInfo.COORDINATES_KEY, new CoordinatesProperty(player.getBlockPos()));
-        deathInfo.setProperty(DeathInfo.DIMENSION_KEY, new StringProperty("deathlog.deathinfoproperty.dimension", player.getWorld().getRegistryKey().getValue().toString()));
+        deathInfo.setProperty(DeathInfo.DIMENSION_KEY, new StringProperty("deathlogger.deathinfoproperty.dimension", player.getWorld().getRegistryKey().getValue().toString()));
 
         if (client.isInSingleplayer()) {
             deathInfo.setProperty(DeathInfo.LOCATION_KEY, new LocationProperty(((MinecraftServerAccessor) client.getServer()).deathlog_getSession().getDirectoryName(), false));
@@ -74,8 +74,8 @@ public class ClientDeathLogStorage extends BaseDeathLogStorage implements Direct
         }
 
         deathInfo.setProperty(DeathInfo.SCORE_KEY, new ScoreProperty(player.getScore(), player.experienceLevel, player.experienceProgress, player.totalExperience));
-        deathInfo.setProperty(DeathInfo.DEATH_MESSAGE_KEY, new StringProperty("deathlog.deathinfoproperty.death_message", deathMessage.getString()));
-        deathInfo.setProperty(DeathInfo.TIME_OF_DEATH_KEY, new StringProperty("deathlog.deathinfoproperty.time_of_death", new Date().toString()));
+        deathInfo.setProperty(DeathInfo.DEATH_MESSAGE_KEY, new StringProperty("deathlogger.deathinfoproperty.death_message", deathMessage.getString()));
+        deathInfo.setProperty(DeathInfo.TIME_OF_DEATH_KEY, new StringProperty("deathlogger.deathinfoproperty.time_of_death", new Date().toString()));
 
         SpecialPropertyProvider.apply(deathInfo, player);
         DeathInfoCreatedCallback.EVENT.invoker().event(deathInfo);

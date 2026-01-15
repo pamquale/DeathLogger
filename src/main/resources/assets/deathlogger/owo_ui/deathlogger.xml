@@ -92,7 +92,7 @@
                             <flow-layout direction="vertical">
                                 <children>
                                     <label>
-                                        <text translate="true">text.deathlog.no_info_selected_hint</text>
+                                        <text translate="true">text.deathlogger.no_info_selected_hint</text>
                                         <horizontal-text-alignment>center</horizontal-text-alignment>
                                     </label>
                                 </children>
@@ -117,7 +117,7 @@
                 </scroll>
 
                 <button id="config-button">
-                    <text translate="true">text.deathlog.config</text>
+                    <text translate="true">text.deathlogger.config</text>
                     <renderer>
                         <flat color="#77000000" hovered-color="#77afafaf" disabled-color="black"/>
                     </renderer>
@@ -141,7 +141,7 @@
 
     <templates>
         <death-list-entry>
-            <deathlog.death-list-entry-container>
+            <deathlogger.death-list-entry-container>
                 <children>
                     <flow-layout direction="vertical">
                         <children>
@@ -168,7 +168,7 @@
                     <vertical method="fixed">30</vertical>
                     <horizontal method="fill">100</horizontal>
                 </sizing>
-            </deathlog.death-list-entry-container>
+            </deathlogger.death-list-entry-container>
         </death-list-entry>
     </templates>
 </owo-ui>

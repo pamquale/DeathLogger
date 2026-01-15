@@ -25,7 +25,7 @@ import java.util.UUID;
 
 public class DeathLogPackets {
 
-    public static final OwoNetChannel CHANNEL = OwoNetChannel.create(Identifier.of("deathlog", "channel"));
+    public static final OwoNetChannel CHANNEL = OwoNetChannel.create(Identifier.of("deathlogger", "channel"));
 
     public static void init() {
         CHANNEL.builder().register(DeathInfo.ENDEC, DeathInfo.class);
@@ -34,7 +34,7 @@ public class DeathLogPackets {
         CHANNEL.registerClientboundDeferred(DeathInfoData.class);
 
         CHANNEL.registerServerbound(InfoRequest.class, (message, access) -> {
-            if (!DeathLogServer.hasPermission(access.player(), "deathlog.view")) {
+            if (!DeathLogServer.hasPermission(access.player(), "deathlogger.view")) {
                 BaseDeathLogStorage.LOGGER.warn("Received unauthorized info request from {}", access.player().getName().getString());
                 return;
             }
@@ -46,7 +46,7 @@ public class DeathLogPackets {
         });
 
         CHANNEL.registerServerbound(RestoreRequest.class, (message, access) -> {
-            if (!DeathLogServer.hasPermission(access.player(), "deathlog.restore")) {
+            if (!DeathLogServer.hasPermission(access.player(), "deathlogger.restore")) {
                 BaseDeathLogStorage.LOGGER.warn("Received unauthorized restore packet from {}", access.player().getName().getString());
                 return;
             }

@@ -1,0 +1,10 @@
+{
+  "deathlogger.deathinfoproperty.coordinates": "Posição",
+  "deathlogger.deathinfoproperty.dimension": "Dimensão",
+  "deathlogger.deathinfoproperty.location": "Local",
+  "deathlogger.deathinfoproperty.score": "Pontuação",
+  "deathlogger.deathinfoproperty.death_message": "Aviso de morte",
+  "deathlogger.deathinfoproperty.time_of_death": "Hora da morte",
+  "deathlogger.deathinfoproperty.trinket_component": "Acessórios",
+  "key.deathlogger.death_screen": "Tela do DeathLogger"
+}

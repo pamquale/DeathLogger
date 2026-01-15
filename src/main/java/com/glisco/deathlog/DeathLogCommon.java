@@ -16,7 +16,7 @@ import org.jetbrains.annotations.ApiStatus;
 public class DeathLogCommon implements ModInitializer {
 
     public static final Registry<DeathInfoPropertyType<?>> PROPERTY_TYPES = FabricRegistryBuilder
-        .createSimple(RegistryKey.<DeathInfoPropertyType<?>>ofRegistry(Identifier.of("deathlog", "property_type")))
+        .createSimple(RegistryKey.<DeathInfoPropertyType<?>>ofRegistry(Identifier.of("deathlogger", "property_type")))
         .buildAndRegister();
 
     private static DeathLogStorage currentStorage = null;
@@ -24,7 +24,7 @@ public class DeathLogCommon implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        AutoRegistryContainer.register(DeathInfoPropertyTypes.class, "deathlog", false);
+        AutoRegistryContainer.register(DeathInfoPropertyTypes.class, "deathlogger", false);
 
 //        if (FabricLoader.getInstance().isModLoaded("trinkets")) {
 //            SpecialPropertyProvider.register(TrinketComponentProperty::apply);

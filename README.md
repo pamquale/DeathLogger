@@ -1,12 +1,65 @@
-# DeathLog
+# DeathLogger
 
-[![curseforge](https://img.shields.io/badge/-CurseForge-gray?style=for-the-badge&logo=curseforge&labelColor=orange)](https://www.curseforge.com/minecraft/mc-mods/deathlog)
-[![modrinth](https://img.shields.io/badge/-modrinth-gray?style=for-the-badge&labelColor=green&labelWidth=15&logo=appveyor&logoColor=white)](https://modrinth.com/mod/deathlog)
-[![release](https://img.shields.io/github/v/release/glisco03/deathlog?logo=github&style=for-the-badge)](https://github.com/glisco03/deathlog/releases)
-[![discord](https://img.shields.io/discord/825828008644313089?label=wisp%20forest&logo=discord&logoColor=white&style=for-the-badge)](https://discord.gg/xrwHKktV2d)
+> 🔀 **This is a fork of [DeathLog](https://github.com/glisco03/deathlog) by glisco03, updated for Minecraft 1.21.4 with new features and improvements.**
 
-## Overview
+[![GitHub release](https://img.shields.io/github/v/release/pamquale/deathlogger?logo=github&style=for-the-badge)](https://github.com/pamquale/deathlogger/releases)
+[![Minecraft](https://img.shields.io/badge/Minecraft-1.21.4-green?style=for-the-badge)](https://minecraft.net)
+[![Fabric](https://img.shields.io/badge/Fabric-Mod-blue?style=for-the-badge)](https://fabricmc.net)
 
-DeathLog tracks your deaths in all worlds and servers. It does this completely client-side and records important metadata like coordinates, dimension and even your entire inventory. Since version 0.2.0 onward however, DeathLog can also operate server-side and track all deaths of all players on that server, with native functionality for restoring a death snapshot. DeathLog can be used on both sides without being required on the other, however managing the server's database is significantly easier with a DeathLog-enabled client.
+An advanced death history mod. Keeps track of your deaths, restores inventory layouts, and saves coordinates. Essential for any survival world.
 
-![log screen](https://i.imgur.com/cWzoapt.png)
+## ✨ Features
+
+- 🎒 **Inventory Preview** — Full inventory snapshot at the moment of death, including armor and offhand
+- 📍 **Death Coordinates** — Exact location with dimension info for easy navigation back
+- 🔍 **Searchable History** — Filter deaths by time, death message, or location
+- 🔄 **Inventory Restoration** — Restore items via commands (server) or spawn in Creative mode
+- 📦 **Container Preview** — View contents of Shulker Boxes and Bundles
+- 📸 **Screenshot Support** — Optional automatic screenshots linked to deaths
+- 🖥️ **Server Support** — Works both client-side and server-side
+
+## 📸 Screenshots
+
+*Screenshots coming soon*
+
+<!-- ![Main Screen](docs/screenshot_main.png) -->
+<!-- ![Death Details](docs/screenshot_details.png) -->
+
+## 📥 Installation
+
+### Requirements
+- [Fabric Loader](https://fabricmc.net/use/) for Minecraft 1.21.4
+- [Fabric API](https://modrinth.com/mod/fabric-api)
+- [owo-lib](https://modrinth.com/mod/owo-lib) (required dependency)
+
+### Steps
+1. Install Fabric Loader for Minecraft 1.21.4
+2. Download Fabric API and owo-lib
+3. Download the latest **DeathLogger** release from [Releases](https://github.com/pamquale/deathlogger/releases)
+4. Place all `.jar` files into your `mods` folder
+5. Launch the game!
+
+## ⌨️ Usage
+
+- Press **End** key to open DeathLogger (configurable in Controls)
+- Access via the **Statistics** screen button
+- **Right-click** on a death entry for restore/delete options
+- **Middle-click** on items to spawn (Creative) or copy `/give` command
+
+## 🛠️ Server Commands
+
+```
+/deathlogger list <player> [search]    — List deaths for a player
+/deathlogger view <player>             — Open death viewer
+/deathlogger restore <player> <index>  — Restore specific death
+/deathlogger restore <player> latest   — Restore most recent death
+```
+
+## 📄 License
+
+MIT License — See [LICENSE](LICENSE) for details.
+
+## 🙏 Credits
+
+- **glisco03** — Original [DeathLog](https://github.com/glisco03/deathlog) author
+- **Alexander** — Fork maintainer, 1.21.4 update, new features

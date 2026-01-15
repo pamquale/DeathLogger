@@ -103,7 +103,7 @@ public class InventoryProperty implements RestorableDeathInfoProperty {
         public static final Type INSTANCE = new Type();
 
         private Type() {
-            super("deathlog.deathinfoproperty.inventory", Identifier.of("deathlog", "inventory"));
+            super("deathlogger.deathinfoproperty.inventory", Identifier.of("deathlogger", "inventory"));
         }
 
         @Override

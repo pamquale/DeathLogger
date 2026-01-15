@@ -33,10 +33,10 @@ public class LocationProperty implements DeathInfoProperty {
     @Override
     public Text formatted() {
         return Text.translatable(
-                "deathlog.deathinfoproperty.location.value", location,
+                "deathlogger.deathinfoproperty.location.value", location,
                 multiplayer
-                        ? Text.translatable("deathlog.deathinfoproperty.location.multiplayer")
-                        : Text.translatable("deathlog.deathinfoproperty.location.singleplayer")
+                        ? Text.translatable("deathlogger.deathinfoproperty.location.multiplayer")
+                        : Text.translatable("deathlogger.deathinfoproperty.location.singleplayer")
         );
     }
 
@@ -50,7 +50,7 @@ public class LocationProperty implements DeathInfoProperty {
         public static final Type INSTANCE = new Type();
 
         private Type() {
-            super("deathlog.deathinfoproperty.location", Identifier.of("deathlog", "location"));
+            super("deathlogger.deathinfoproperty.location", Identifier.of("deathlogger", "location"));
         }
 
         @Override

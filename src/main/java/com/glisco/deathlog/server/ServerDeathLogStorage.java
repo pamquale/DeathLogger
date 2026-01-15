@@ -81,11 +81,11 @@ public class ServerDeathLogStorage extends BaseDeathLogStorage {
         deathInfo.setProperty(DeathInfo.INVENTORY_KEY, new InventoryProperty(player.getInventory()));
 
         deathInfo.setProperty(DeathInfo.COORDINATES_KEY, new CoordinatesProperty(player.getBlockPos()));
-        deathInfo.setProperty(DeathInfo.DIMENSION_KEY, new StringProperty("deathlog.deathinfoproperty.dimension", player.getWorld().getRegistryKey().getValue().toString()));
+        deathInfo.setProperty(DeathInfo.DIMENSION_KEY, new StringProperty("deathlogger.deathinfoproperty.dimension", player.getWorld().getRegistryKey().getValue().toString()));
         deathInfo.setProperty(DeathInfo.LOCATION_KEY, new LocationProperty("Server", true));
         deathInfo.setProperty(DeathInfo.SCORE_KEY, new ScoreProperty(player.getScore(), player.experienceLevel, player.experienceProgress, player.totalExperience));
-        deathInfo.setProperty(DeathInfo.DEATH_MESSAGE_KEY, new StringProperty("deathlog.deathinfoproperty.death_message", deathMessage.getString()));
-        deathInfo.setProperty(DeathInfo.TIME_OF_DEATH_KEY, new StringProperty("deathlog.deathinfoproperty.time_of_death", new Date().toString()));
+        deathInfo.setProperty(DeathInfo.DEATH_MESSAGE_KEY, new StringProperty("deathlogger.deathinfoproperty.death_message", deathMessage.getString()));
+        deathInfo.setProperty(DeathInfo.TIME_OF_DEATH_KEY, new StringProperty("deathlogger.deathinfoproperty.time_of_death", new Date().toString()));
 
         SpecialPropertyProvider.apply(deathInfo, player);
         DeathInfoCreatedCallback.EVENT.invoker().event(deathInfo);

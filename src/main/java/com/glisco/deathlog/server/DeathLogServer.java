@@ -47,11 +47,11 @@ public class DeathLogServer implements DedicatedServerModInitializer {
         });
 
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
-            dispatcher.register(literal("deathlog").then(literal("list").requires(hasPermission("deathlog.list"))
+            dispatcher.register(literal("deathlogger").then(literal("list").requires(hasPermission("deathlogger.list"))
                             .then(createProfileArgument().executes(context -> executeList(context, null))
                                     .then(argument("search_term", StringArgumentType.string())
                                             .executes(context -> executeList(context, StringArgumentType.getString(context, "search_term"))))))
-                    .then(literal("view").requires(hasPermission("deathlog.view")).then(createProfileArgument().executes(context -> {
+                    .then(literal("view").requires(hasPermission("deathlogger.view")).then(createProfileArgument().executes(context -> {
                         var player = context.getSource().getPlayer();
                         var profileId = getProfile(context).getId();
 
@@ -61,7 +61,7 @@ public class DeathLogServer implements DedicatedServerModInitializer {
                                 DeathLogServer.getStorage().getDeathInfoList(profileId)
                         ));
                         return 0;
-                    }))).then(literal("restore").requires(hasPermission("deathlog.restore")).then(createProfileArgument().then(argument("index", IntegerArgumentType.integer()).executes(context -> {
+                    }))).then(literal("restore").requires(hasPermission("deathlogger.restore")).then(createProfileArgument().then(argument("index", IntegerArgumentType.integer()).executes(context -> {
                         int index = IntegerArgumentType.getInteger(context, "index");
                         return executeRestore(context, index);
                     })).then(literal("latest").executes(DeathLogServer::executeRestoreLatest)))));

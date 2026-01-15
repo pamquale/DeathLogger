@@ -1,19 +1,20 @@
 {
   "schemaVersion": 1,
-  "id": "deathlog",
+  "id": "deathlogger",
   "version": "${version}",
   "name": "DeathLogger",
-  "description": "Keeps track of the many embarrassing times you died",
+  "description": "Keeps track of your deaths with detailed statistics, inventory previews, and coordinates recovery. Fork of DeathLog updated for newer versions and new features.",
   "authors": [
-    "glisco"
+    "pamquale",
+    "glisco03"
   ],
   "contact": {
-    "issues": "https://github.com/gliscowo/deathlog/issues",
-    "sources": "https://github.com/gliscowo/deathlog",
-    "homepage": "https://modrinth.com/mod/deathlog"
+    "issues": "https://github.com/pamquale/deathlogger/issues",
+    "sources": "https://github.com/pamquale/deathlogger",
+    "homepage": "https://github.com/pamquale/deathlogger"
   },
   "license": "MIT",
-  "icon": "assets/deathlog/icon.png",
+  "icon": "assets/deathlogger/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
@@ -27,7 +28,7 @@
     ]
   },
   "mixins": [
-    "deathlog.mixins.json"
+    "deathlogger.mixins.json"
   ],
   "depends": {
     "fabricloader": "*",
@@ -41,7 +42,7 @@
   "custom": {
     "modmenu": {
       "links": {
-        "modmenu.discord": "https://discord.gg/xrwHKktV2d"
+ 
       }
     }
   }

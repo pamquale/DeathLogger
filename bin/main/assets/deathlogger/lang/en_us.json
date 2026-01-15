@@ -1,0 +1,43 @@
+{
+  "deathlogger.deathinfoproperty.coordinates": "Coordinates",
+  "deathlogger.deathinfoproperty.coordinates.value": "§c%s §a%s §b%s",
+  "deathlogger.deathinfoproperty.dimension": "Dimension",
+  "deathlogger.deathinfoproperty.location.singleplayer": "Singleplayer",
+  "deathlogger.deathinfoproperty.location.multiplayer": "Multiplayer",
+  "deathlogger.deathinfoproperty.location": "Location",
+  "deathlogger.deathinfoproperty.location.value": "%s §7(%s)",
+  "deathlogger.deathinfoproperty.score": "Score",
+  "deathlogger.deathinfoproperty.score.value": "%s §7(%s levels, %s xp)",
+  "deathlogger.deathinfoproperty.death_message": "Death Message",
+  "deathlogger.deathinfoproperty.time_of_death": "Time of Death",
+  "deathlogger.deathinfoproperty.trinket_component": "Trinkets",
+  "deathlogger.deathinfoproperty.trinket_component.value": "§b%s§r items",
+  "key.deathlogger.death_screen": "DeathLogger Screen",
+
+  "text.deathlogger.action.restore": "Restore",
+  "text.deathlogger.action.give_item.spawn": {"text": "Press Mouse 3 to spawn", "color": "gray"},
+  "text.deathlogger.action.give_item.copy_give": {"text": "Press Mouse 3 to copy /give", "color": "gray"},
+  "text.deathlogger.action.delete": {"text": "Delete", "color": "red"},
+
+  "text.deathlogger.info.time_missing": "Time missing",
+  "text.deathlogger.info.death_message_missing": "Death message missing",
+
+  "text.deathlogger.death_list_title": "DeathLogger - %s total",
+  "text.deathlogger.death_info_loading": "Loading...",
+  "text.deathlogger.no_info_selected_hint": "Select a death info from\nthe list to get started",
+
+  "text.deathlogger.death_screenshot": "Death Screenshot",
+  "text.deathlogger.scroll_hint": "▼ Scroll down for Screenshot & Container Loot ▼",
+  "text.deathlogger.extra_containers": "Container Contents",
+  "text.deathlogger.container_empty": "Empty",
+
+  "text.deathlogger.config": "⇄ Config",
+  "text.config.deathlogger.title": "DeathLogger Configuration",
+  "text.config.deathlogger.option.screenshotsEnabled": "Screenshot on death",
+  "text.config.deathlogger.option.useLegacyDeathDetection": "Use legacy death detection",
+  "text.config.deathlogger.option.useLegacyDeathDetection.tooltip": [
+    "Uses a less reliable but more sensitive\n",
+    "method of detecting deaths that works\n",
+    "with protocol translators like ViaFabric"
+  ]
+}
