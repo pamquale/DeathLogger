@@ -26,7 +26,7 @@ public class DeathLogClient implements ClientModInitializer {
 
     public static final com.glisco.deathlog.client.DeathLogConfig CONFIG = com.glisco.deathlog.client.DeathLogConfig.createAndLoad();
 
-    public static final KeyBinding OPEN_DEATH_SCREEN = new KeyBinding("key.deathlogger.death_screen", GLFW.GLFW_KEY_END, "key.categories.misc");
+    public static final KeyBinding OPEN_DEATH_SCREEN = new KeyBinding("key.deathlogger.death_screen", GLFW.GLFW_KEY_END, KeyBinding.Category.MISC);
     private static ClientDeathLogStorage storage;
 
     @Override
@@ -45,7 +45,7 @@ public class DeathLogClient implements ClientModInitializer {
             if (!(screen instanceof StatsScreen)) return;
             Screens.getButtons(screen).add(ButtonWidget.builder(Text.of("DeathLogger"), button -> {
                 openScreen(getClientStorage());
-            }).size(75, 20).position(10, 5).build());
+            }).size(75, 20).position(6, 6).build());
         });
 
         KeyBindingHelper.registerKeyBinding(OPEN_DEATH_SCREEN);

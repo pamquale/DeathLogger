@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.9-SNAPSHOT'
+    id 'fabric-loom' version '1.11-SNAPSHOT'
     id 'maven-publish'
 }
 
@@ -34,8 +34,8 @@ dependencies {
     include "io.wispforest:owo-sentinel:${project.owo_version}"
 
     // BetterStats integration (optional - compileOnly so mod works without it)
-    modCompileOnly "maven.modrinth:better-stats:3.13.9+fabric-1.21.4"
-    modCompileOnly "maven.modrinth:tcdcommons:3.12.7+fabric-1.21.4"
+    modCompileOnly "maven.modrinth:better-stats:4.0.0+fabric-1.21.9"
+    modCompileOnly "maven.modrinth:tcdcommons:4.0.1+fabric-1.21.9"
 
     // modCompileOnly 'me.lucko:fabric-permissions-api:0.2-SNAPSHOT'
 }
