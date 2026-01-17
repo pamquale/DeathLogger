@@ -26,16 +26,9 @@ An advanced death history mod. Keeps track of your deaths, restores inventory la
 ## 📥 Installation
 
 ### Requirements
-- [Fabric Loader](https://fabricmc.net/use/) for Minecraft 1.21.4
+- [Fabric Loader](https://fabricmc.net/use/) 
 - [Fabric API](https://modrinth.com/mod/fabric-api)
-- [owo-lib](https://modrinth.com/mod/owo-lib) (required dependency)
-
-### Steps
-1. Install Fabric Loader for Minecraft 1.21.4
-2. Download Fabric API and owo-lib
-3. Download the latest **DeathLogger** release from [Releases](https://github.com/pamquale/deathlogger/releases)
-4. Place all `.jar` files into your `mods` folder
-5. Launch the game!
+- [owo-lib](https://modrinth.com/mod/owo-lib) 
 
 ## ⌨️ Usage
 
