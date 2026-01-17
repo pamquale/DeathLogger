@@ -23,8 +23,6 @@ An advanced death history mod. Keeps track of your deaths, restores inventory la
   <img src="https://github.com/user-attachments/assets/09af8ea3-6821-44e7-b9c5-67d365508dae" alt="Detail View" width="600" />
 </div>
 
-## 📥 Installation
-
 ### Requirements
 - [Fabric Loader](https://fabricmc.net/use/) 
 - [Fabric API](https://modrinth.com/mod/fabric-api)
