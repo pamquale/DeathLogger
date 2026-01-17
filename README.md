@@ -1,7 +1,7 @@
 > 🔀 **This is a fork of [DeathLog](https://github.com/glisco03/deathlog) by glisco03, updated for Minecraft newer versions with new features and improvements.**
 
 [![GitHub release](https://img.shields.io/github/v/release/pamquale/deathlogger?logo=github&style=for-the-badge)](https://github.com/pamquale/deathlogger/releases)
-[![Minecraft](https://img.shields.io/badge/Minecraft-1.21.4-green?style=for-the-badge)](https://minecraft.net)
+[![Minecraft](https://img.shields.io/badge/Minecraft-1.21.10-green?style=for-the-badge)](https://minecraft.net)
 
 An advanced death history mod. Keeps track of your deaths, restores inventory layouts, and saves coordinates. Essential for any survival world.
 
