@@ -9,7 +9,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import io.wispforest.owo.config.ui.ConfigScreen;
 import io.wispforest.owo.ui.base.BaseUIModelScreen;
 import io.wispforest.owo.ui.component.*;
-import io.wispforest.owo.ui.container.Containers;
+import io.wispforest.owo.ui.container.UIContainers;
 import io.wispforest.owo.ui.container.FlowLayout;
 import io.wispforest.owo.ui.container.GridLayout;
 import io.wispforest.owo.ui.core.Color;
@@ -184,36 +184,36 @@ public class DeathLogScreen extends BaseUIModelScreen<FlowLayout> {
             panel.clearChildren();
 
             if (info.isPartial()) {
-                panel.child(Components.label(Text.translatable("text.deathlogger.death_info_loading")).margins(Insets.top(15)));
+                panel.child(UIComponents.label(Text.translatable("text.deathlogger.death_info_loading")).margins(Insets.top(15)));
                 return;
             }
 
-            panel.child(Components.label(info.getTitle()).shadow(true).margins(Insets.of(15, 10, 0, 0)));
+            panel.child(UIComponents.label(info.getTitle()).shadow(true).margins(Insets.of(15, 10, 0, 0)));
 
             FlowLayout leftColumn;
             FlowLayout rightColumn;
-            panel.child(Containers.horizontalFlow(Sizing.content(), Sizing.content())
-                    .child(leftColumn = Containers.verticalFlow(Sizing.content(), Sizing.content()))
-                    .child(rightColumn = Containers.verticalFlow(Sizing.content(), Sizing.content())));
+            panel.child(UIContainers.horizontalFlow(Sizing.content(), Sizing.content())
+                    .child(leftColumn = UIContainers.verticalFlow(Sizing.content(), Sizing.content()))
+                    .child(rightColumn = UIContainers.verticalFlow(Sizing.content(), Sizing.content())));
 
             leftColumn.gap(2);
             for (var text : info.getLeftColumnText()) {
-                leftColumn.child(Components.label(text).shadow(true));
+                leftColumn.child(UIComponents.label(text).shadow(true));
             }
 
             rightColumn.gap(2).margins(Insets.left(5));
             for (var text : info.getRightColumnText()) {
-                rightColumn.child(Components.label(text));
+                rightColumn.child(UIComponents.label(text));
             }
 
             FlowLayout itemContainer;
-            panel.child(itemContainer = Containers.verticalFlow(Sizing.content(), Sizing.content()));
+            panel.child(itemContainer = UIContainers.verticalFlow(Sizing.content(), Sizing.content()));
             itemContainer.margins(Insets.top(5));
 
-            itemContainer.child(Components.texture(Identifier.of("deathlogger", "textures/gui/inventory_overlay.png"), 0, 0, 210, 107));
+            itemContainer.child(UIComponents.texture(Identifier.of("deathlogger", "textures/gui/inventory_overlay.png"), 0, 0, 210, 107));
 
             FlowLayout armorFlow;
-            itemContainer.child(armorFlow = Containers.verticalFlow(Sizing.content(), Sizing.content()));
+            itemContainer.child(armorFlow = UIContainers.verticalFlow(Sizing.content(), Sizing.content()));
 
             armorFlow.positioning(Positioning.absolute(185, 28));
             for (int i = 0; i < info.getPlayerArmor().size(); i++) {
@@ -221,7 +221,7 @@ public class DeathLogScreen extends BaseUIModelScreen<FlowLayout> {
             }
 
             GridLayout itemGrid;
-            itemContainer.child(itemGrid = Containers.grid(Sizing.content(), Sizing.content(), 4, 9));
+            itemContainer.child(itemGrid = UIContainers.grid(Sizing.content(), Sizing.content(), 4, 9));
 
             var inventory = info.getPlayerItems();
 
@@ -239,7 +239,7 @@ public class DeathLogScreen extends BaseUIModelScreen<FlowLayout> {
             }
             
             // Scroll hint label
-            panel.child(Components.label(Text.translatable("text.deathlogger.scroll_hint"))
+            panel.child(UIComponents.label(Text.translatable("text.deathlogger.scroll_hint"))
                     .color(Color.ofFormatting(Formatting.DARK_GRAY))
                     .horizontalTextAlignment(io.wispforest.owo.ui.core.HorizontalAlignment.CENTER)
                     .margins(Insets.of(8, 5, 0, 0)));
@@ -272,7 +272,7 @@ public class DeathLogScreen extends BaseUIModelScreen<FlowLayout> {
                     List<ItemStack> contents = containerComponent.stream().toList();
                     if (!contents.isEmpty() && contents.stream().anyMatch(s -> !s.isEmpty())) {
                         if (!hasContainers) {
-                            panel.child(Components.label(Text.translatable("text.deathlogger.extra_containers"))
+                            panel.child(UIComponents.label(Text.translatable("text.deathlogger.extra_containers"))
                                     .shadow(true)
                                     .margins(Insets.of(15, 5, 0, 0)));
                             hasContainers = true;
@@ -289,7 +289,7 @@ public class DeathLogScreen extends BaseUIModelScreen<FlowLayout> {
                     List<ItemStack> contents = bundleComponent.stream().toList();
                     if (!contents.isEmpty()) {
                         if (!hasContainers) {
-                            panel.child(Components.label(Text.translatable("text.deathlogger.extra_containers"))
+                            panel.child(UIComponents.label(Text.translatable("text.deathlogger.extra_containers"))
                                     .shadow(true)
                                     .margins(Insets.of(15, 5, 0, 0)));
                             hasContainers = true;
@@ -308,15 +308,15 @@ public class DeathLogScreen extends BaseUIModelScreen<FlowLayout> {
         // Container header with item name (colored by rarity)
         Text containerName = containerStack.getName().copy().formatted(containerStack.getRarity().getFormatting());
         
-        FlowLayout containerSection = Containers.verticalFlow(Sizing.content(), Sizing.content());
+        FlowLayout containerSection = UIContainers.verticalFlow(Sizing.content(), Sizing.content());
         containerSection.margins(Insets.of(8, 5, 0, 5));
         containerSection.surface(Surface.flat(0x40000000));
         containerSection.padding(Insets.of(5));
         
         // Header row with icon and name
-        FlowLayout headerRow = Containers.horizontalFlow(Sizing.content(), Sizing.content());
-        headerRow.child(Components.item(containerStack).sizing(Sizing.fixed(16), Sizing.fixed(16)));
-        headerRow.child(Components.label(containerName).shadow(true).margins(Insets.left(4)));
+        FlowLayout headerRow = UIContainers.horizontalFlow(Sizing.content(), Sizing.content());
+        headerRow.child(UIComponents.item(containerStack).sizing(Sizing.fixed(16), Sizing.fixed(16)));
+        headerRow.child(UIComponents.label(containerName).shadow(true).margins(Insets.left(4)));
         headerRow.verticalAlignment(io.wispforest.owo.ui.core.VerticalAlignment.CENTER);
         containerSection.child(headerRow);
         
@@ -324,7 +324,7 @@ public class DeathLogScreen extends BaseUIModelScreen<FlowLayout> {
         List<ItemStack> nonEmptyContents = contents.stream().filter(s -> !s.isEmpty()).toList();
         
         if (nonEmptyContents.isEmpty()) {
-            containerSection.child(Components.label(Text.translatable("text.deathlogger.container_empty"))
+            containerSection.child(UIComponents.label(Text.translatable("text.deathlogger.container_empty"))
                     .color(Color.ofFormatting(Formatting.GRAY))
                     .margins(Insets.of(3, 0, 0, 0)));
         } else {
@@ -332,7 +332,7 @@ public class DeathLogScreen extends BaseUIModelScreen<FlowLayout> {
             int columns = expectedSlots > 0 ? 9 : Math.min(9, nonEmptyContents.size());
             int rows = (int) Math.ceil((double) nonEmptyContents.size() / columns);
             
-            GridLayout itemGrid = Containers.grid(Sizing.content(), Sizing.content(), rows, columns);
+            GridLayout itemGrid = UIContainers.grid(Sizing.content(), Sizing.content(), rows, columns);
             itemGrid.margins(Insets.top(3));
             
             for (int i = 0; i < nonEmptyContents.size(); i++) {
@@ -352,7 +352,7 @@ public class DeathLogScreen extends BaseUIModelScreen<FlowLayout> {
      * Creates an item component for container contents (simpler than main inventory items)
      */
     private ItemComponent makeContainerItem(ItemStack stack) {
-        var item = Components.item(stack).showOverlay(true);
+        var item = UIComponents.item(stack).showOverlay(true);
         item.margins(Insets.of(1));
         
         if (!stack.isEmpty()) {
@@ -365,7 +365,7 @@ public class DeathLogScreen extends BaseUIModelScreen<FlowLayout> {
     }
 
     private ItemComponent makeItem(ItemStack stack, Insets margins) {
-        var item = Components.item(stack).showOverlay(true);
+        var item = UIComponents.item(stack).showOverlay(true);
         item.margins(margins);
 
         if (!stack.isEmpty()) {
@@ -486,11 +486,11 @@ public class DeathLogScreen extends BaseUIModelScreen<FlowLayout> {
             }
             
             // Add screenshot section
-            panel.child(Components.label(Text.translatable("text.deathlogger.death_screenshot"))
+            panel.child(UIComponents.label(Text.translatable("text.deathlogger.death_screenshot"))
                     .shadow(true)
                     .margins(Insets.of(10, 5, 0, 0)));
             
-            panel.child(Components.texture(screenshotTextureId, 0, 0, image.getWidth(), image.getHeight(), image.getWidth(), image.getHeight())
+            panel.child(UIComponents.texture(screenshotTextureId, 0, 0, image.getWidth(), image.getHeight(), image.getWidth(), image.getHeight())
                     .sizing(Sizing.fixed(displayWidth), Sizing.fixed(displayHeight))
                     .margins(Insets.of(5, 0, 0, 5)));
             
