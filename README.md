@@ -21,6 +21,7 @@ An advanced death history mod. Keeps track of your deaths, restores inventory la
   <img src="https://github.com/user-attachments/assets/ad4d85f6-dcd9-4cc7-a5b7-68f82aafd19b" alt="Main Screen" width="600" />
   <br/><br/>
   <img src="https://github.com/user-attachments/assets/09af8ea3-6821-44e7-b9c5-67d365508dae" alt="Detail View" width="600" />
+  <img width="600" alt="Better Stats Integration" src="https://github.com/user-attachments/assets/78c55618-be29-4ddf-b265-09d518592cb0" />
 </div>
 
 ### Requirements
