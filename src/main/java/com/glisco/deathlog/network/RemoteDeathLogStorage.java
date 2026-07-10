@@ -30,8 +30,10 @@ public class RemoteDeathLogStorage extends BaseDeathLogStorage implements Direct
     @Override
     public void delete(DeathInfo info, @Nullable UUID profile) {
         int index = deathInfoList.indexOf(info);
+        if (index < 0) return;
+
         DeathLogPackets.CHANNEL.clientHandle().send(new DeathLogPackets.DeletionRequest(profileId, index));
-        deathInfoList.remove(info);
+        deathInfoList.remove(index);
     }
 
     @Override

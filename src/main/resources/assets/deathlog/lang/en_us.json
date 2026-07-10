@@ -1,45 +1,23 @@
 {
   "deathlog.deathinfoproperty.coordinates": "Coordinates",
-  "deathlog.deathinfoproperty.coordinates.value": [
-    {"index": 0, "color": "red"},
-    " ",
-    {"index": 1, "color": "green"},
-    " ",
-    {"index": 2, "color": "aqua"}
-  ],
+  "deathlog.deathinfoproperty.coordinates.value": "§c%s §a%s §b%s",
   "deathlog.deathinfoproperty.dimension": "Dimension",
   "deathlog.deathinfoproperty.location.singleplayer": "Singleplayer",
   "deathlog.deathinfoproperty.location.multiplayer": "Multiplayer",
   "deathlog.deathinfoproperty.location": "Location",
-  "deathlog.deathinfoproperty.location.value": [
-    {"index": 0},
-    {"text": " (", "color": "gray"},
-    {"index": 1, "color": "gray"},
-    {"text": ")", "color": "gray"}
-  ],
+  "deathlog.deathinfoproperty.location.value": "%s §7(%s)",
   "deathlog.deathinfoproperty.score": "Score",
-  "deathlog.deathinfoproperty.score.value": [
-    {"index": 0},
-    {"text": " (", "color": "gray"},
-    {"index": 1, "color": "gray"},
-    {"text": " levels, ", "color": "gray"},
-    {"index": 2, "color": "gray"},
-    {"text": " xp)", "color": "gray"}
-  ],
+  "deathlog.deathinfoproperty.score.value": "%s §7(%s levels, %s xp)",
   "deathlog.deathinfoproperty.death_message": "Death Message",
   "deathlog.deathinfoproperty.time_of_death": "Time of Death",
   "deathlog.deathinfoproperty.trinket_component": "Trinkets",
-  "deathlog.deathinfoproperty.trinket_component.value": [
-    "",
-    {"index": 0, "color": "aqua"},
-    " items"
-  ],
+  "deathlog.deathinfoproperty.trinket_component.value": "§b%s§r items",
   "key.deathlog.death_screen": "DeathLogger Screen",
 
   "text.deathlog.action.restore": "Restore",
-  "text.deathlog.action.give_item.spawn": {"text": "Press Mouse 3 to spawn", "color": "gray"},
-  "text.deathlog.action.give_item.copy_give": {"text": "Press Mouse 3 to copy /give", "color": "gray"},
-  "text.deathlog.action.delete": {"text": "Delete", "color": "red"},
+  "text.deathlog.action.give_item.spawn": "§7Press Mouse 3 to spawn",
+  "text.deathlog.action.give_item.copy_give": "§7Press Mouse 3 to copy /give",
+  "text.deathlog.action.delete": "§cDelete",
 
   "text.deathlog.info.time_missing": "Time missing",
   "text.deathlog.info.death_message_missing": "Death message missing",
@@ -57,12 +35,5 @@
   "text.config.deathlog.title": "DeathLogger Configuration",
   "text.config.deathlog.option.screenshotsEnabled": "Screenshot on death",
   "text.config.deathlog.option.useLegacyDeathDetection": "Use legacy death detection",
-  "text.config.deathlog.option.useLegacyDeathDetection.tooltip": [
-    "Uses a less reliable but more sensitive\n",
-    "method of detecting deaths that works\n",
-    "with protocol translators like ViaFabric"
-  ],
-
-  "deathlogger.betterstats.menubar": "Deaths",
-  "deathlogger.betterstats.view_deaths": "View Death Log"
+  "text.config.deathlog.option.useLegacyDeathDetection.tooltip": "Uses a less reliable but more sensitive\nmethod of detecting deaths that works\nwith protocol translators like ViaFabric"
 }

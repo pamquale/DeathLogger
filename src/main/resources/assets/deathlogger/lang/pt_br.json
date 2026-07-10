@@ -6,5 +6,8 @@
   "deathlogger.deathinfoproperty.death_message": "Aviso de morte",
   "deathlogger.deathinfoproperty.time_of_death": "Hora da morte",
   "deathlogger.deathinfoproperty.trinket_component": "Acessórios",
-  "key.deathlogger.death_screen": "Tela do DeathLogger"
+  "key.deathlogger.death_screen": "Tela do DeathLogger",
+
+  "deathlogger.betterstats.menubar": "Mortes",
+  "deathlogger.betterstats.open_deaths": "Ver Registro de Mortes"
 }

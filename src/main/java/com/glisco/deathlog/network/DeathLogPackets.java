@@ -39,9 +39,15 @@ public class DeathLogPackets {
                 return;
             }
 
+            final var infoList = DeathLogCommon.getStorage().getDeathInfoList(message.profile);
+            if (message.index < 0 || message.index >= infoList.size()) {
+                BaseDeathLogStorage.LOGGER.warn("Received info request with invalid index from '{}'", access.player().getName().getString());
+                return;
+            }
+
             CHANNEL.serverHandle(access.player()).send(new DeathInfoData(
                     message.index,
-                    DeathLogCommon.getStorage().getDeathInfoList(message.profile).get(message.index)
+                    infoList.get(message.index)
             ));
         });
 
@@ -58,7 +64,7 @@ public class DeathLogPackets {
             }
 
             final var infoList = DeathLogCommon.getStorage().getDeathInfoList(message.profile);
-            if (message.index > infoList.size() - 1) {
+            if (message.index < 0 || message.index >= infoList.size()) {
                 BaseDeathLogStorage.LOGGER.warn("Received restore packet with invalid index from '{}'", access.player().getName().getString());
                 return;
             }
@@ -84,7 +90,13 @@ public class DeathLogPackets {
                 return;
             }
 
-            DeathLogServer.getStorage().delete(DeathLogServer.getStorage().getDeathInfoList(message.profile).get(message.index), message.profile);
+            final var infoList = DeathLogServer.getStorage().getDeathInfoList(message.profile);
+            if (message.index < 0 || message.index >= infoList.size()) {
+                BaseDeathLogStorage.LOGGER.warn("Received deletion packet with invalid index from '{}'", access.player().getName().getString());
+                return;
+            }
+
+            DeathLogServer.getStorage().delete(infoList.get(message.index), message.profile);
         });
     }
 

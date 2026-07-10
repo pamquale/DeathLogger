@@ -40,7 +40,7 @@ public abstract class BaseDeathLogStorage implements DeathLogStorage {
         Util.getIoWorkerExecutor().service().submit(() -> {
             if (errored) {
                 LOGGER.warn("Attempted to load DeathLog database even though disk operations are disabled");
-                future.complete(null);
+                future.complete(new ArrayList<>());
                 return;
             }
 
@@ -55,16 +55,15 @@ public abstract class BaseDeathLogStorage implements DeathLogStorage {
 
                         LOGGER.error("Incompatible DeathLog database format detected. Database not loaded and further disk operations disabled");
 
-                        future.complete(null);
+                        future.complete(new ArrayList<>());
                         return;
                     }
                 } catch (IOException e) {
                     raiseError("Disk access failed");
 
-                    e.printStackTrace();
-                    LOGGER.error("Failed to load DeathLog database, further disk operations have been disabled");
+                    LOGGER.error("Failed to load DeathLog database, further disk operations have been disabled", e);
 
-                    future.completeExceptionally(e);
+                    future.complete(new ArrayList<>());
                     return;
                 }
             } else {

@@ -38,8 +38,8 @@ public class ServerDeathLogStorage extends BaseDeathLogStorage {
             Files.list(deathLogDir).forEach(path -> {
                 if (isErrored()) return;
 
-                if (!Files.exists(path)) return;
-                if (path.endsWith(".dat")) return;
+                if (!Files.isRegularFile(path)) return;
+                if (!path.toString().endsWith(".dat")) return;
 
                 UUID uuid;
 
@@ -70,8 +70,10 @@ public class ServerDeathLogStorage extends BaseDeathLogStorage {
 
     @Override
     public void delete(DeathInfo info, UUID profile) {
-        deathInfos.get(profile).remove(info);
-        save(Owo.currentServer().getRegistryManager(), deathLogDir.resolve(profile.toString() + ".dat").toFile(), deathInfos.get(profile));
+        var infoList = deathInfos.get(profile);
+        if (infoList == null || !infoList.remove(info)) return;
+
+        save(Owo.currentServer().getRegistryManager(), deathLogDir.resolve(profile.toString() + ".dat").toFile(), infoList);
     }
 
     @Override

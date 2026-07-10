@@ -4,10 +4,12 @@
   "package": "com.glisco.deathlog.mixin",
   "compatibilityLevel": "JAVA_21",
   "refmap": "deathlogger-refmap.json",
+  "plugin": "com.glisco.deathlog.mixin.DeathLogMixinPlugin",
   "client": [
     "ClientPlayNetworkHandlerMixin",
     "MinecraftServerAccessor",
-    "SystemToastAccessor"
+    "SystemToastAccessor",
+    "compat.MenubarItemViewMixin"
   ],
   "server": [
     "ServerPlayerEntityMixin"

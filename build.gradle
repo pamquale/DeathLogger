@@ -34,8 +34,8 @@ dependencies {
     include "io.wispforest:owo-sentinel:${project.owo_version}"
 
     // BetterStats integration (optional - compileOnly so mod works without it)
-    modCompileOnly "maven.modrinth:better-stats:4.0.0+fabric-1.21.9"
-    modCompileOnly "maven.modrinth:tcdcommons:4.0.1+fabric-1.21.9"
+    modCompileOnly "maven.modrinth:better-stats:5.1.0+fabric-1.21.11"
+    modCompileOnly "maven.modrinth:tcdcommons:5.1.0+fabric-1.21.11"
 
     // modCompileOnly 'me.lucko:fabric-permissions-api:0.2-SNAPSHOT'
 }

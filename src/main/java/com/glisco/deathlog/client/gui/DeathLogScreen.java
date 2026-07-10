@@ -102,10 +102,6 @@ public class DeathLogScreen extends BaseUIModelScreen<FlowLayout> {
             this.client.setScreen(ConfigScreen.create(DeathLogClient.CONFIG, this));
         });
 
-        this.uiAdapter.rootComponent.childById(LabelComponent.class, "death-count-label").text(
-                Text.translatable("text.deathlogger.death_list_title", this.storage.getDeathInfoList().size())
-        );
-
         this.buildDeathList();
     }
 
@@ -119,6 +115,10 @@ public class DeathLogScreen extends BaseUIModelScreen<FlowLayout> {
     }
 
     private void buildDeathList() {
+        this.uiAdapter.rootComponent.childById(LabelComponent.class, "death-count-label").text(
+                Text.translatable("text.deathlogger.death_list_title", this.storage.getDeathInfoList().size())
+        );
+
         this.uiAdapter.rootComponent.childById(FlowLayout.class, "death-list").<FlowLayout>configure(deathList -> {
             deathList.clearChildren();
 

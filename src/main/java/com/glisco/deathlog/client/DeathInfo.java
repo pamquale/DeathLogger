@@ -22,16 +22,20 @@ public class DeathInfo {
     );
 
     public static final Endec<DeathInfo> PARTIAL_ENDEC = StructEndecBuilder.of(
-            sequencedMapEndec(DeathInfoProperty.ENDEC).xmap(properties -> {
-                SequencedMap<String, DeathInfoProperty> copy = new LinkedHashMap<>();
-                properties.forEach((key, property) -> {
-                    if (property instanceof InventoryProperty || property instanceof TrinketComponentProperty) return;
-                    copy.put(key, property);
-                });
-                return copy;
-            }, map -> map).fieldOf("properties", info -> info.properties),
+            sequencedMapEndec(DeathInfoProperty.ENDEC)
+                    .xmap(DeathInfo::stripHeavyProperties, DeathInfo::stripHeavyProperties)
+                    .fieldOf("properties", info -> info.properties),
             DeathInfo::new
     );
+
+    private static SequencedMap<String, DeathInfoProperty> stripHeavyProperties(SequencedMap<String, DeathInfoProperty> properties) {
+        SequencedMap<String, DeathInfoProperty> copy = new LinkedHashMap<>();
+        properties.forEach((key, property) -> {
+            if (property instanceof InventoryProperty || property instanceof TrinketComponentProperty) return;
+            copy.put(key, property);
+        });
+        return copy;
+    }
 
     public static final String COORDINATES_KEY = "coordinates";
     public static final String DIMENSION_KEY = "dimension";
