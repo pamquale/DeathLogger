@@ -1,7 +1,7 @@
 package com.glisco.deathlog.storage;
 
 import com.glisco.deathlog.DeathInfo;
-import com.mojang.logging.LogUtils;
+import com.glisco.deathlog.DeathLog;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtIo;
@@ -34,7 +34,7 @@ public abstract class BaseDeathLogStorage implements DeathLogStorage {
      */
     private static final int FORMAT_REVISION = 4;
 
-    public static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = DeathLog.LOGGER;
 
     private final RegistryAccess registries;
     private boolean errored = false;
