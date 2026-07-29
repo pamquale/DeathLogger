@@ -1,0 +1,32 @@
+{
+  "deathlogger.deathinfoproperty.coordinates": "Coordinates",
+  "deathlogger.deathinfoproperty.coordinates.value": "§c%s §a%s §b%s",
+  "deathlogger.deathinfoproperty.dimension": "Dimension",
+  "deathlogger.deathinfoproperty.location": "Location",
+  "deathlogger.deathinfoproperty.location.value": "%s §7(%s)",
+  "deathlogger.deathinfoproperty.location.multiplayer": "Multiplayer",
+  "deathlogger.deathinfoproperty.location.singleplayer": "Singleplayer",
+  "deathlogger.deathinfoproperty.score": "Score",
+  "deathlogger.deathinfoproperty.score.value": "%s §7(%s levels, %s xp)",
+  "deathlogger.deathinfoproperty.death_message": "Death Message",
+  "deathlogger.deathinfoproperty.time_of_death": "Time of Death",
+  "deathlogger.deathinfoproperty.string": "Value",
+  "deathlogger.deathinfoproperty.inventory": "Inventory",
+  "deathlogger.deathinfoproperty.missing": "Unknown",
+
+  "text.deathlogger.title": "DeathLogger",
+  "text.deathlogger.search": "Search",
+  "text.deathlogger.death_list_title": "%s deaths recorded",
+  "text.deathlogger.no_info_selected_hint": "Select a death to see its details",
+  "text.deathlogger.death_info_loading": "Loading...",
+  "text.deathlogger.info.time_missing": "Unknown time",
+  "text.deathlogger.info.death_message_missing": "Unknown cause",
+  "text.deathlogger.action.restore": "Restore",
+  "text.deathlogger.action.delete": "Delete",
+  "text.deathlogger.action.give_item.copied": "[DeathLogger] Copied a /give command to the clipboard",
+
+  "key.deathlogger.death_screen": "Open DeathLogger",
+  "key.categories.deathlogger": "DeathLogger",
+
+  "deathlogger.betterstats.open_deaths": "View Death Log"
+}

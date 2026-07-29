@@ -1,0 +1,35 @@
+{
+    "schemaVersion": 1,
+    "id": "${mod_id}",
+    "version": "${version}",
+    "name": "${mod_name}",
+    "description": "${description}",
+    "authors": [
+        "${mod_author}"
+    ],
+    "contact": {
+        "homepage": "https://github.com/pamquale/DeathLogger",
+        "sources": "https://github.com/pamquale/DeathLogger",
+        "issues": "https://github.com/pamquale/DeathLogger/issues"
+    },
+    "license": "${license}",
+    "icon": "assets/${mod_id}/icon.png",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "com.glisco.deathlog.fabric.DeathLoggerFabric"
+        ],
+        "client": [
+            "com.glisco.deathlog.fabric.DeathLoggerFabricClient"
+        ]
+    },
+    "mixins": [
+        "${mod_id}.mixins.json"
+    ],
+    "depends": {
+        "fabricloader": ">=${fabric_loader_version}",
+        "fabric-api": "*",
+        "minecraft": "~${minecraft_version}",
+        "java": ">=${java_version}"
+    }
+}
