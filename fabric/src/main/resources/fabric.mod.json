@@ -21,6 +21,9 @@
         ],
         "client": [
             "com.glisco.deathlog.fabric.DeathLoggerFabricClient"
+        ],
+        "modmenu": [
+            "com.glisco.deathlog.fabric.ModMenuIntegration"
         ]
     },
     "mixins": [

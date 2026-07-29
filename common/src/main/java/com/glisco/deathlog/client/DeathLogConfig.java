@@ -18,7 +18,7 @@ public final class DeathLogConfig {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static DeathLogConfig instance;
 
-    private boolean screenshotsEnabled = false;
+    private boolean screenshotsEnabled = true;
     private boolean useLegacyDeathDetection = false;
 
     public static DeathLogConfig get() {

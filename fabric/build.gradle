@@ -4,6 +4,8 @@ plugins {
 }
 
 repositories {
+    maven { url = "https://maven.terraformersmc.com/releases" }
+
     exclusiveContent {
         forRepository { maven { url = 'https://api.modrinth.com/maven' } }
         filter { includeGroup('maven.modrinth') }
@@ -19,6 +21,9 @@ dependencies {
     // DeathLogMixinPlugin refuses to apply the compat mixin when it is absent.
     compileOnly "maven.modrinth:better-stats:${betterstats_version}"
     compileOnly "maven.modrinth:tcdcommons:${tcdcommons_version}"
+
+    // Mod Menu, so the settings screen is reachable from the mod list.
+    compileOnly "com.terraformersmc:modmenu:${modmenu_version}"
 }
 
 loom {

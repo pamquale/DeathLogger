@@ -116,6 +116,11 @@ public class DeathLogScreen extends Screen {
                 Component.translatable("text.deathlogger.action.delete"), button -> deleteSelected()
         ).bounds(this.detailX + buttonWidth + 4, this.height - PANEL_PADDING - 20, buttonWidth, 20).build());
 
+        addRenderableWidget(Button.builder(
+                Component.translatable("text.deathlogger.config.title"),
+                button -> this.minecraft.setScreen(new DeathLogConfigScreen(this))
+        ).bounds(this.width - PANEL_PADDING - 60, PANEL_PADDING - 6, 60, 16).build());
+
         this.restoreButton.active = false;
         this.deleteButton.active = false;
 
