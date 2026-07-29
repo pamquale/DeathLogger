@@ -3,8 +3,8 @@ package com.glisco.deathlog.fabric;
 import com.glisco.deathlog.DeathLog;
 import com.glisco.deathlog.DeathLogCommon;
 import com.glisco.deathlog.client.ClientDeathLogStorage;
+import com.glisco.deathlog.client.DeathLogClient;
 import com.glisco.deathlog.client.DeathLogClientNetworking;
-import com.glisco.deathlog.client.gui.DeathLogScreen;
 import com.glisco.deathlog.fabric.network.DeathLogPayloads;
 import com.glisco.deathlog.mixin.MinecraftServerAccessor;
 import com.glisco.deathlog.storage.DirectDeathLogStorage;
@@ -13,18 +13,24 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import com.mojang.blaze3d.platform.InputConstants;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.lwjgl.glfw.GLFW;
 
 public class DeathLoggerFabricClient implements ClientModInitializer {
 
     private static ClientDeathLogStorage storage;
 
+    /**
+     * Unbound by default. The screen is reachable from the vanilla statistics
+     * screen and from BetterStats, so a key is a convenience the player opts into
+     * rather than a default binding taken from them.
+     */
     public static final KeyMapping OPEN_DEATH_SCREEN = new KeyMapping(
-            "key.deathlogger.death_screen", GLFW.GLFW_KEY_END, KeyMapping.Category.MISC
+            "key.deathlogger.death_screen", InputConstants.UNKNOWN.getValue(), KeyMapping.Category.MISC
     );
 
     @Override
@@ -42,7 +48,7 @@ public class DeathLoggerFabricClient implements ClientModInitializer {
         });
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            while (OPEN_DEATH_SCREEN.consumeClick()) openScreen();
+            while (OPEN_DEATH_SCREEN.consumeClick()) DeathLogClient.openScreen();
         });
 
         ClientPlayNetworking.registerGlobalReceiver(DeathLogPayloads.OpenScreen.TYPE, (payload, context) ->
@@ -83,12 +89,5 @@ public class DeathLoggerFabricClient implements ClientModInitializer {
 
     public static DirectDeathLogStorage getClientStorage() {
         return storage;
-    }
-
-    public static void openScreen() {
-        if (storage == null) return;
-
-        var client = Minecraft.getInstance();
-        DeathLogScreen.open(client.screen, storage, client.getCurrentServer() == null);
     }
 }

@@ -10,14 +10,28 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.BundleItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.ShulkerBoxBlock;
 import org.lwjgl.glfw.GLFW;
 
+import com.glisco.deathlog.DeathLog;
+import com.glisco.deathlog.client.DeathScreenshots;
+import com.glisco.deathlog.death_info.properties.ScreenshotProperty;
+import com.mojang.blaze3d.platform.NativeImage;
+
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 /**
  * The death browser, rebuilt on vanilla widgets.
@@ -47,6 +61,11 @@ public class DeathLogScreen extends Screen {
     private EditBox searchBox;
     private Button restoreButton;
     private Button deleteButton;
+
+    private Identifier screenshotTextureId;
+    private DynamicTexture screenshotTexture;
+    private int screenshotWidth;
+    private int screenshotHeight;
 
     private int listX;
     private int listY;
@@ -151,8 +170,10 @@ public class DeathLogScreen extends Screen {
     public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTick) {
         super.extractRenderState(graphics, mouseX, mouseY, partialTick);
 
-        graphics.fill(this.listX, PANEL_PADDING, this.listX + this.listWidth, this.height - PANEL_PADDING, PANEL_COLOR);
-        graphics.fill(this.detailX, PANEL_PADDING, this.detailX + this.detailWidth, this.height - PANEL_PADDING, PANEL_COLOR);
+        // Stop short of the search box and the buttons: super has already drawn
+        // them, and painting the translucent panel over a widget dims it.
+        graphics.fill(this.listX, PANEL_PADDING, this.listX + this.listWidth, this.searchBox.getY() - 2, PANEL_COLOR);
+        graphics.fill(this.detailX, PANEL_PADDING, this.detailX + this.detailWidth, this.restoreButton.getY() - 2, PANEL_COLOR);
 
         graphics.text(this.font, Component.translatable("text.deathlogger.death_list_title", this.visibleInfos.size()),
                 this.listX + 4, PANEL_PADDING + 3, 0xFFFFFFFF);
@@ -219,6 +240,108 @@ public class DeathLogScreen extends Screen {
 
         y += 6;
         renderInventory(graphics, info, this.detailX + 4, y, mouseX, mouseY);
+
+        int extrasY = y + SLOT_SIZE + 4 + 4 * SLOT_SIZE + 4 + SLOT_SIZE + 6;
+        extrasY = renderContainers(graphics, info, this.detailX + 4, extrasY, mouseX, mouseY);
+        renderScreenshot(graphics, this.detailX + 4, extrasY);
+    }
+
+    /**
+     * Draws the contents of any shulker box or bundle the player was carrying.
+     */
+    private int renderContainers(GuiGraphicsExtractor graphics, DeathInfo info, int x, int y, int mouseX, int mouseY) {
+        var carried = new ArrayList<ItemStack>(info.getPlayerItems());
+        carried.addAll(info.getPlayerArmor());
+
+        boolean headerDrawn = false;
+        for (var stack : carried) {
+            var contents = contentsOf(stack);
+            if (contents.isEmpty()) continue;
+
+            if (!headerDrawn) {
+                graphics.text(this.font, Component.translatable("text.deathlogger.extra_containers"), x, y, 0xFFFFFFFF);
+                y += 12;
+                headerDrawn = true;
+            }
+
+            graphics.item(stack, x, y);
+            graphics.text(this.font, stack.getHoverName(), x + SLOT_SIZE, y + 4, 0xFFAAAAAA);
+            y += SLOT_SIZE;
+
+            for (int i = 0; i < contents.size(); i++) {
+                int slotX = x + (i % 9) * SLOT_SIZE;
+                int slotY = y + (i / 9) * SLOT_SIZE;
+                drawSlot(graphics, contents.get(i), slotX, slotY, mouseX, mouseY, null);
+            }
+            y += ((contents.size() + 8) / 9) * SLOT_SIZE + 4;
+        }
+
+        return y + (headerDrawn ? 4 : 0);
+    }
+
+    private static List<ItemStack> contentsOf(ItemStack stack) {
+        if (stack.isEmpty()) return List.of();
+
+        if (stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof ShulkerBoxBlock) {
+            var container = stack.get(DataComponents.CONTAINER);
+            if (container != null) return container.allItemsCopyStream().filter(item -> !item.isEmpty()).toList();
+        }
+
+        if (stack.getItem() instanceof BundleItem) {
+            var bundle = stack.get(DataComponents.BUNDLE_CONTENTS);
+            if (bundle != null) return bundle.itemCopyStream().filter(item -> !item.isEmpty()).toList();
+        }
+
+        return List.of();
+    }
+
+    private void renderScreenshot(GuiGraphicsExtractor graphics, int x, int y) {
+        if (this.screenshotTextureId == null) return;
+
+        graphics.text(this.font, Component.translatable("text.deathlogger.death_screenshot"), x, y, 0xFFFFFFFF);
+        graphics.blit(this.screenshotTextureId, x, y + 12, this.screenshotWidth, this.screenshotHeight, 0f, 1f, 0f, 1f);
+    }
+
+    /**
+     * Textures are registered per selection and must be handed back, so this runs
+     * on every reselect and on close.
+     */
+    private void releaseScreenshot() {
+        if (this.screenshotTextureId != null && this.minecraft != null) {
+            this.minecraft.getTextureManager().release(this.screenshotTextureId);
+        }
+        if (this.screenshotTexture != null) {
+            this.screenshotTexture.close();
+        }
+        this.screenshotTextureId = null;
+        this.screenshotTexture = null;
+    }
+
+    private void loadScreenshot(DeathInfo info) {
+        releaseScreenshot();
+        if (this.minecraft == null) return;
+
+        var property = info.getProperty(DeathInfo.SCREENSHOT_KEY).orElse(null);
+        if (!(property instanceof ScreenshotProperty screenshot)) return;
+
+        var path = DeathScreenshots.resolve(screenshot.getFileName());
+        if (!Files.exists(path)) return;
+
+        try (var stream = Files.newInputStream(path)) {
+            var image = NativeImage.read(stream);
+
+            int maxWidth = Math.min(200, this.detailWidth - 8);
+            float scale = Math.min(1f, (float) maxWidth / image.getWidth());
+            this.screenshotWidth = Math.max(1, (int) (image.getWidth() * scale));
+            this.screenshotHeight = Math.max(1, (int) (image.getHeight() * scale));
+
+            this.screenshotTexture = new DynamicTexture(() -> "deathlogger_screenshot", image);
+            this.screenshotTextureId = DeathLog.id("screenshot/" + UUID.randomUUID());
+            this.minecraft.getTextureManager().register(this.screenshotTextureId, this.screenshotTexture);
+        } catch (IOException e) {
+            DeathLog.LOGGER.error("Failed to load the death screenshot {}", screenshot.getFileName(), e);
+            releaseScreenshot();
+        }
     }
 
     private void renderInventory(GuiGraphicsExtractor graphics, DeathInfo info, int x, int y, int mouseX, int mouseY) {
@@ -285,6 +408,7 @@ public class DeathLogScreen extends Screen {
                 this.selectedIndex = index;
                 updateButtons();
                 requestFullInfo();
+                loadScreenshot(this.visibleInfos.get(index));
                 return true;
             }
         }
@@ -368,6 +492,7 @@ public class DeathLogScreen extends Screen {
 
     @Override
     public void onClose() {
+        releaseScreenshot();
         if (this.minecraft != null) this.minecraft.setScreen(this.parent);
     }
 

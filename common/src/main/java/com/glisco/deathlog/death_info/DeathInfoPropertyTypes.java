@@ -5,6 +5,7 @@ import com.glisco.deathlog.death_info.properties.InventoryProperty;
 import com.glisco.deathlog.death_info.properties.LocationProperty;
 import com.glisco.deathlog.death_info.properties.MissingDeathInfoProperty;
 import com.glisco.deathlog.death_info.properties.ScoreProperty;
+import com.glisco.deathlog.death_info.properties.ScreenshotProperty;
 import com.glisco.deathlog.death_info.properties.StringProperty;
 import net.minecraft.resources.Identifier;
 
@@ -29,6 +30,7 @@ public final class DeathInfoPropertyTypes {
     public static final DeathInfoPropertyType<LocationProperty> LOCATION = register(LocationProperty.Type.INSTANCE);
     public static final DeathInfoPropertyType<ScoreProperty> SCORE = register(ScoreProperty.Type.INSTANCE);
     public static final DeathInfoPropertyType<StringProperty> STRING = register(StringProperty.Type.INSTANCE);
+    public static final DeathInfoPropertyType<ScreenshotProperty> SCREENSHOT = register(ScreenshotProperty.Type.INSTANCE);
 
     private DeathInfoPropertyTypes() {}
 

@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.glisco.deathlog.fabric.mixin",
+  "compatibilityLevel": "JAVA_18",
+  "plugin": "com.glisco.deathlog.fabric.mixin.DeathLogMixinPlugin",
+  "client": [
+    "compat.MenubarItemViewMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -6,6 +6,7 @@ import com.glisco.deathlog.death_info.properties.CoordinatesProperty;
 import com.glisco.deathlog.death_info.properties.InventoryProperty;
 import com.glisco.deathlog.death_info.properties.LocationProperty;
 import com.glisco.deathlog.death_info.properties.ScoreProperty;
+import com.glisco.deathlog.death_info.properties.ScreenshotProperty;
 import com.glisco.deathlog.death_info.properties.StringProperty;
 import com.glisco.deathlog.network.DeathLogPacket;
 import com.glisco.deathlog.platform.Services;
@@ -73,6 +74,11 @@ public class ClientDeathLogStorage extends BaseDeathLogStorage implements Direct
         deathInfo.setProperty(DeathInfo.TIME_OF_DEATH_KEY, new StringProperty(
                 "deathlogger.deathinfoproperty.time_of_death", new Date().toString()
         ));
+
+        if (DeathLogConfig.get().screenshotsEnabled()) {
+            var fileName = DeathScreenshots.capture();
+            if (fileName != null) deathInfo.setProperty(DeathInfo.SCREENSHOT_KEY, new ScreenshotProperty(fileName));
+        }
 
         SpecialPropertyProvider.apply(deathInfo, player);
         DeathInfoCreatedCallback.invoke(deathInfo);

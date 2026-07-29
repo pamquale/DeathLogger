@@ -32,6 +32,7 @@ public class DeathInfo {
     public static final String DEATH_MESSAGE_KEY = "death_message";
     public static final String TIME_OF_DEATH_KEY = "time_of_death";
     public static final String INVENTORY_KEY = "inventory";
+    public static final String SCREENSHOT_KEY = "screenshot";
 
     private static final Codec<Entry> ENTRY_CODEC = RecordCodecBuilder.create(instance -> instance.group(
             Codec.STRING.fieldOf("key").forGetter(Entry::key),
