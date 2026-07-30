@@ -18,9 +18,9 @@ An advanced death history mod. Keeps track of your deaths, restores inventory la
 - 🖥️ **Server Support** — Dedicated servers keep their own logs, with `/deathlogger` commands to inspect and restore them
 
 ## 📸 Screenshots
-<img width="2560" height="1440" alt="Discord_ExCW7fMbu5" src="https://github.com/user-attachments/assets/7154cc24-8a8d-4314-91dd-a34c3b7eb58c" />
+![Discord_ExCW7fMbu5](https://github.com/user-attachments/assets/7154cc24-8a8d-4314-91dd-a34c3b7eb58c)
 
-<img width="2560" height="1440" alt="Discord_PjsERqPDlC" src="https://github.com/user-attachments/assets/256d783f-d274-433b-ab19-fa0e7c29719a" />
+![Discord_PjsERqPDlC](https://github.com/user-attachments/assets/256d783f-d274-433b-ab19-fa0e7c29719a)
 
 Forge builds are published for 26.1.2 only. Forge has no recommended build for
 26.1 or 26.1.1, and those versions fail to start regardless of which mods are
