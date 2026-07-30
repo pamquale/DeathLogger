@@ -64,8 +64,17 @@ public class DeathLoggerForge {
         static void init() {
             RegisterKeyMappingsEvent.BUS.addListener(event -> event.register(OPEN_DEATH_SCREEN));
 
+            // Puts the settings screen behind the Config button in the built-in mod list.
+            net.minecraftforge.fml.ModList.getModContainerById(DeathLog.MOD_ID).ifPresent(container ->
+                    container.registerExtensionPoint(
+                            net.minecraftforge.client.ConfigScreenHandler.ConfigScreenFactory.class,
+                            () -> new net.minecraftforge.client.ConfigScreenHandler.ConfigScreenFactory(
+                                    parent -> new com.glisco.deathlog.client.gui.DeathLogConfigScreen(parent)
+                            )
+                    ));
+
             ClientPlayerNetworkEvent.LoggingIn.BUS.addListener(
-                    event -> DeathLogCommon.setStorage(ForgeClientStorage.create(Minecraft.getInstance()))
+                    event -> DeathLogCommon.setStorage(DeathLogClient.createStorage())
             );
             ClientPlayerNetworkEvent.LoggingOut.BUS.addListener(event -> DeathLogCommon.setStorage(null));
 

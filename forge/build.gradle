@@ -51,3 +51,11 @@ sourceSets.configureEach {
         }
     }
 }
+
+// Forge detects mixin configs from the jar manifest, not from mods.toml the way
+// NeoForge does - see MinecraftForge/MDKExamples.
+jar {
+    manifest {
+        attributes "MixinConfigs": "${mod_id}.mixins.json"
+    }
+}

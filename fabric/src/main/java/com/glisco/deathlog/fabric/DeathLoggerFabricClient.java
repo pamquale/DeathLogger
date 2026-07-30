@@ -7,7 +7,6 @@ import com.glisco.deathlog.client.DeathLogClient;
 import com.glisco.deathlog.client.DeathLogClientNetworking;
 import com.glisco.deathlog.compat.BetterStatsIntegration;
 import com.glisco.deathlog.network.DeathLogPayloads;
-import com.glisco.deathlog.mixin.MinecraftServerAccessor;
 import com.glisco.deathlog.storage.DirectDeathLogStorage;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -40,7 +39,7 @@ public class DeathLoggerFabricClient implements ClientModInitializer {
         BetterStatsIntegration.init();
 
         ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
-            storage = createStorage(client);
+            storage = DeathLogClient.createStorage();
             DeathLogCommon.setStorage(storage);
         });
 
@@ -59,35 +58,6 @@ public class DeathLoggerFabricClient implements ClientModInitializer {
                 context.client().execute(() -> DeathLogClientNetworking.handleClientbound(payload.packet())));
     }
 
-    /**
-     * One log per world or server, named after a hash of the world directory or the
-     * server entry, so logs from different places never mix.
-     */
-    private static ClientDeathLogStorage createStorage(Minecraft client) {
-        if (client.level == null) return null;
-
-        final String locationName;
-        final boolean multiplayer;
-
-        if (client.hasSingleplayerServer() && client.getSingleplayerServer() != null) {
-            locationName = ((MinecraftServerAccessor) client.getSingleplayerServer())
-                    .deathlogger$getStorageSource().getLevelId();
-            multiplayer = false;
-        } else if (client.getCurrentServer() != null) {
-            locationName = client.getCurrentServer().name;
-            multiplayer = true;
-        } else {
-            locationName = "unknown";
-            multiplayer = false;
-        }
-
-        var suffix = DigestUtils.sha1Hex(locationName).substring(0, 10);
-        var file = FabricLoader.getInstance().getGameDir()
-                .resolve(DeathLog.MOD_ID)
-                .resolve("deaths_" + suffix + ".dat");
-
-        return new ClientDeathLogStorage(client.level.registryAccess(), file, locationName, multiplayer);
-    }
 
     public static DirectDeathLogStorage getClientStorage() {
         return storage;

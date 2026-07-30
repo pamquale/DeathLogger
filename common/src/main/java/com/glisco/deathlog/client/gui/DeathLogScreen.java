@@ -17,9 +17,12 @@ import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.component.TypedDataComponent;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.RegistryOps;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.BundleItem;
 import net.minecraft.world.item.ItemStack;
@@ -32,6 +35,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * The death browser, rebuilt on vanilla widgets.
@@ -562,7 +567,7 @@ public class DeathLogScreen extends Screen {
         if (stack == null || stack.isEmpty()) return false;
 
         var id = BuiltInRegistries.ITEM.getKey(stack.getItem());
-        var command = "/give " + this.minecraft.player.getName().getString() + " " + id
+        var command = "/give " + this.minecraft.player.getName().getString() + " " + id + componentsOf(stack)
                 + (stack.getCount() > 1 ? " " + stack.getCount() : "");
 
         this.minecraft.keyboardHandler.setClipboard(command);
@@ -570,6 +575,37 @@ public class DeathLogScreen extends Screen {
                 Component.translatable("text.deathlogger.action.give_item.copied").withStyle(ChatFormatting.GRAY)
         );
         return true;
+    }
+
+    /**
+     * Renders the stack's component patch as the {@code [a=b,!c]} part of a give
+     * command, so enchantments, custom names and a shulker's contents survive.
+     * Without this the command handed back a bare item.
+     * <p>
+     * The result can get long; that is preferred over losing the data, since a
+     * command block will take it either way.
+     */
+    private String componentsOf(ItemStack stack) {
+        var patch = stack.getComponentsPatch();
+        if (patch.isEmpty()) return "";
+
+        var ops = RegistryOps.create(NbtOps.INSTANCE, this.storage.registries());
+        var rendered = patch.entrySet().stream().flatMap(entry -> {
+            var typeId = BuiltInRegistries.DATA_COMPONENT_TYPE.getKey(entry.getKey());
+            if (typeId == null) return Stream.<String>empty();
+
+            var value = entry.getValue();
+            // An empty Optional means the component was removed from the default.
+            if (value.isEmpty()) return Stream.of("!" + typeId);
+
+            return TypedDataComponent.createUnchecked(entry.getKey(), value.get())
+                    .encodeValue(ops)
+                    .result()
+                    .stream()
+                    .map(tag -> typeId + "=" + tag);
+        }).collect(Collectors.joining(","));
+
+        return rendered.isEmpty() ? "" : "[" + rendered + "]";
     }
 
     @Override

@@ -9,8 +9,7 @@
   ],
   "client": [
     "ClientPacketListenerMixin",
-    "StatsScreenMixin",
-    "MinecraftServerAccessor"
+    "StatsScreenMixin"
   ],
   "server": [],
   "injectors": {

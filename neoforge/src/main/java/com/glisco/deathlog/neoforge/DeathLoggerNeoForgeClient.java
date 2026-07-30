@@ -6,7 +6,6 @@ import com.glisco.deathlog.client.ClientDeathLogStorage;
 import com.glisco.deathlog.client.DeathLogClient;
 import com.glisco.deathlog.client.DeathLogClientNetworking;
 import com.glisco.deathlog.compat.BetterStatsIntegration;
-import com.glisco.deathlog.mixin.MinecraftServerAccessor;
 import com.glisco.deathlog.network.DeathLogPacket;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
@@ -39,6 +38,13 @@ public class DeathLoggerNeoForgeClient {
         NeoForge.EVENT_BUS.addListener(DeathLoggerNeoForgeClient::onClientTick);
 
         BetterStatsIntegration.init();
+
+        // Puts the settings screen behind the Config button in the built-in mod list.
+        net.neoforged.fml.ModList.get().getModContainerById(DeathLog.MOD_ID).ifPresent(container ->
+                container.registerExtensionPoint(
+                        net.neoforged.neoforge.client.gui.IConfigScreenFactory.class,
+                        (mod, parent) -> new com.glisco.deathlog.client.gui.DeathLogConfigScreen(parent)
+                ));
     }
 
     static void handle(DeathLogPacket packet) {
@@ -50,7 +56,7 @@ public class DeathLoggerNeoForgeClient {
     }
 
     private static void onLoggingIn(ClientPlayerNetworkEvent.LoggingIn event) {
-        storage = createStorage(Minecraft.getInstance());
+        storage = DeathLogClient.createStorage();
         DeathLogCommon.setStorage(storage);
     }
 
@@ -63,33 +69,4 @@ public class DeathLoggerNeoForgeClient {
         while (OPEN_DEATH_SCREEN.consumeClick()) DeathLogClient.openScreen();
     }
 
-    /**
-     * One log per world or server, named after a hash of the world directory or the
-     * server entry, so logs from different places never mix.
-     */
-    private static ClientDeathLogStorage createStorage(Minecraft client) {
-        if (client.level == null) return null;
-
-        final String locationName;
-        final boolean multiplayer;
-
-        if (client.hasSingleplayerServer() && client.getSingleplayerServer() != null) {
-            locationName = ((MinecraftServerAccessor) client.getSingleplayerServer())
-                    .deathlogger$getStorageSource().getLevelId();
-            multiplayer = false;
-        } else if (client.getCurrentServer() != null) {
-            locationName = client.getCurrentServer().name;
-            multiplayer = true;
-        } else {
-            locationName = "unknown";
-            multiplayer = false;
-        }
-
-        var suffix = DigestUtils.sha1Hex(locationName).substring(0, 10);
-        var file = FMLPaths.GAMEDIR.get()
-                .resolve(DeathLog.MOD_ID)
-                .resolve("deaths_" + suffix + ".dat");
-
-        return new ClientDeathLogStorage(client.level.registryAccess(), file, locationName, multiplayer);
-    }
 }
