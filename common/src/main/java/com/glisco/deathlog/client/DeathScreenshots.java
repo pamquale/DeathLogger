@@ -33,14 +33,14 @@ public final class DeathScreenshots {
      */
     public static String capture() {
         var client = Minecraft.getInstance();
-        if (client.getMainRenderTarget() == null) return null;
+        if (client.gameRenderer.mainRenderTarget() == null) return null;
 
         var fileName = UUID.randomUUID() + ".png";
         var target = resolve(fileName);
 
         // The callback lands on the render thread; encoding a PNG there is what
         // made the game hitch at the moment of death. Hand it to the IO pool.
-        Screenshot.takeScreenshot(client.getMainRenderTarget(), image -> Util.ioPool().execute(() -> {
+        Screenshot.takeScreenshot(client.gameRenderer.mainRenderTarget(), image -> Util.ioPool().execute(() -> {
             try (image) {
                 Files.createDirectories(target.getParent());
                 image.writeToFile(target);

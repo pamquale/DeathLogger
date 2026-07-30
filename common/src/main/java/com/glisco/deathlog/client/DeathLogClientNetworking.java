@@ -31,11 +31,11 @@ public final class DeathLogClientNetworking {
         var storage = new RemoteDeathLogStorage(
                 client.level.registryAccess(), new ArrayList<>(packet.partialInfos()), packet.profile()
         );
-        DeathLogScreen.open(client.screen, storage, packet.canRestore());
+        DeathLogScreen.open(client.gui.screen(), storage, packet.canRestore());
     }
 
     private static void handleDeathInfoData(DeathLogPacket.DeathInfoData packet) {
-        if (!(Minecraft.getInstance().screen instanceof DeathLogScreen screen)) {
+        if (!(Minecraft.getInstance().gui.screen() instanceof DeathLogScreen screen)) {
             DeathLog.LOGGER.warn("Received death info while no death log screen was open");
             return;
         }

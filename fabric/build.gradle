@@ -27,7 +27,7 @@ dependencies {
     compileOnly "maven.modrinth:tcdcommons:${tcdcommons_version}"
 
     // Mod Menu, so the settings screen is reachable from the mod list.
-    compileOnly "com.terraformersmc:modmenu:${modmenu_version}"
+    compileOnly "maven.modrinth:modmenu:${modmenu_version}"
 }
 
 loom {

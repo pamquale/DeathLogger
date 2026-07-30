@@ -63,6 +63,6 @@ public final class DeathLogClient {
         if (storage == null) return;
 
         var client = Minecraft.getInstance();
-        DeathLogScreen.open(client.screen, storage, client.getCurrentServer() == null);
+        DeathLogScreen.open(client.gui.screen(), storage, client.getCurrentServer() == null);
     }
 }

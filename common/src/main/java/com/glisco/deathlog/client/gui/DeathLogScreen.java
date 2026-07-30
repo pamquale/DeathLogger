@@ -151,7 +151,7 @@ public class DeathLogScreen extends Screen {
 
         addRenderableWidget(Button.builder(
                 Component.translatable("text.deathlogger.config.title"),
-                button -> this.minecraft.setScreen(new DeathLogConfigScreen(this))
+                button -> this.minecraft.gui.setScreen(new DeathLogConfigScreen(this))
         ).bounds(this.width - PANEL_PADDING - 60, 4, 60, 16).build());
 
         this.restoreButton.active = false;
@@ -630,12 +630,12 @@ public class DeathLogScreen extends Screen {
     @Override
     public void onClose() {
         releaseScreenshot();
-        if (this.minecraft != null) this.minecraft.setScreen(this.parent);
+        if (this.minecraft != null) this.minecraft.gui.setScreen(this.parent);
     }
 
     public static void open(Screen parent, DirectDeathLogStorage storage, boolean canRestore) {
         var screen = new DeathLogScreen(parent, storage);
-        Minecraft.getInstance().setScreen(screen);
+        Minecraft.getInstance().gui.setScreen(screen);
         if (!canRestore) screen.disableRestoring();
     }
 }
