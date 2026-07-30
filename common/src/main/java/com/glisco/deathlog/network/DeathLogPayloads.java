@@ -1,14 +1,15 @@
-package com.glisco.deathlog.fabric.network;
+package com.glisco.deathlog.network;
 
 import com.glisco.deathlog.DeathLog;
-import com.glisco.deathlog.network.DeathLogPacket;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 
 /**
- * Wraps the loader-agnostic {@link DeathLogPacket} types in Fabric payloads.
+ * Wraps the loader-agnostic {@link DeathLogPacket} types in vanilla
+ * {@link CustomPacketPayload}s. Only vanilla types are involved, so all three
+ * loaders share these.
  */
 public final class DeathLogPayloads {
 
@@ -67,6 +68,21 @@ public final class DeathLogPayloads {
         public Type<? extends CustomPacketPayload> type() {
             return TYPE;
         }
+    }
+
+    /** Maps a packet onto its payload wrapper, or null for an unknown one. */
+    public static CustomPacketPayload wrap(DeathLogPacket packet) {
+        return switch (packet) {
+            case DeathLogPacket.OpenScreen p -> new OpenScreen(p);
+            case DeathLogPacket.DeathInfoData p -> new DeathInfoData(p);
+            case DeathLogPacket.InfoRequest p -> new InfoRequest(p);
+            case DeathLogPacket.RestoreRequest p -> new RestoreRequest(p);
+            case DeathLogPacket.DeletionRequest p -> new DeletionRequest(p);
+            default -> {
+                DeathLog.LOGGER.warn("No payload wrapper for {}", packet.getClass().getSimpleName());
+                yield null;
+            }
+        };
     }
 
     private static Identifier id(String path) {

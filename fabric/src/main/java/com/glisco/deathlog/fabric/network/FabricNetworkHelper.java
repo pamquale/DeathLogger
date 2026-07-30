@@ -1,5 +1,7 @@
 package com.glisco.deathlog.fabric.network;
 
+import com.glisco.deathlog.network.DeathLogPayloads;
+
 import com.glisco.deathlog.DeathLog;
 import com.glisco.deathlog.network.DeathLogPacket;
 import com.glisco.deathlog.network.services.INetworkHelper;
@@ -12,27 +14,14 @@ public class FabricNetworkHelper implements INetworkHelper {
 
     @Override
     public void sendToServer(DeathLogPacket packet) {
-        var payload = wrap(packet);
+        var payload = DeathLogPayloads.wrap(packet);
         if (payload != null) ClientPlayNetworking.send(payload);
     }
 
     @Override
     public void sendToPlayer(ServerPlayer player, DeathLogPacket packet) {
-        var payload = wrap(packet);
+        var payload = DeathLogPayloads.wrap(packet);
         if (payload != null) ServerPlayNetworking.send(player, payload);
     }
 
-    private static CustomPacketPayload wrap(DeathLogPacket packet) {
-        return switch (packet) {
-            case DeathLogPacket.OpenScreen p -> new DeathLogPayloads.OpenScreen(p);
-            case DeathLogPacket.DeathInfoData p -> new DeathLogPayloads.DeathInfoData(p);
-            case DeathLogPacket.InfoRequest p -> new DeathLogPayloads.InfoRequest(p);
-            case DeathLogPacket.RestoreRequest p -> new DeathLogPayloads.RestoreRequest(p);
-            case DeathLogPacket.DeletionRequest p -> new DeathLogPayloads.DeletionRequest(p);
-            default -> {
-                DeathLog.LOGGER.warn("No Fabric payload for {}", packet.getClass().getSimpleName());
-                yield null;
-            }
-        };
-    }
 }

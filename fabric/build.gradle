@@ -12,13 +12,17 @@ repositories {
     }
 }
 
+// Better Statistics Screen exists on Fabric and NeoForge but not Forge, so its
+// integration lives in a directory only those two modules compile.
+sourceSets.main.java.srcDir rootProject.file("compat-betterstats/src/main/java")
+
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
     implementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     implementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
 
-    // Better Statistics Screen. compileOnly, so the mod runs fine without it -
-    // DeathLogMixinPlugin refuses to apply the compat mixin when it is absent.
+    // Better Statistics Screen. compileOnly: BetterStatsIntegration checks the mod
+    // is present before touching any of its types.
     compileOnly "maven.modrinth:better-stats:${betterstats_version}"
     compileOnly "maven.modrinth:tcdcommons:${tcdcommons_version}"
 

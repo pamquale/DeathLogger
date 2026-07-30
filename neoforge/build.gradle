@@ -3,6 +3,22 @@ plugins {
     id 'net.neoforged.moddev'
 }
 
+// Better Statistics Screen exists on Fabric and NeoForge but not Forge, so its
+// integration lives in a directory only those two modules compile.
+sourceSets.main.java.srcDir rootProject.file("compat-betterstats/src/main/java")
+
+repositories {
+    exclusiveContent {
+        forRepository { maven { url = "https://api.modrinth.com/maven" } }
+        filter { includeGroup("maven.modrinth") }
+    }
+}
+
+dependencies {
+    compileOnly "maven.modrinth:better-stats:${betterstats_version}"
+    compileOnly "maven.modrinth:tcdcommons:${tcdcommons_version}"
+}
+
 neoForge {
     version = neoforge_version
     // Automatically enable neoforge AccessTransformers if the file exists

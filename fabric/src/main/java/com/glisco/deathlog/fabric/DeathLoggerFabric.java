@@ -2,7 +2,7 @@ package com.glisco.deathlog.fabric;
 
 import com.glisco.deathlog.DeathLogCommon;
 import com.glisco.deathlog.command.DeathLogCommands;
-import com.glisco.deathlog.fabric.network.DeathLogPayloads;
+import com.glisco.deathlog.network.DeathLogPayloads;
 import com.glisco.deathlog.network.DeathLogNetworking;
 import com.glisco.deathlog.storage.ServerDeathLogStorage;
 import net.fabricmc.api.ModInitializer;

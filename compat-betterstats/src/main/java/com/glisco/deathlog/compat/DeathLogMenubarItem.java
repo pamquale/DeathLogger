@@ -1,4 +1,4 @@
-package com.glisco.deathlog.fabric.compat;
+package com.glisco.deathlog.compat;
 
 import com.glisco.deathlog.DeathLog;
 import com.glisco.deathlog.client.DeathLogClient;
