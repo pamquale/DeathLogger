@@ -48,6 +48,8 @@ import java.util.UUID;
 public class DeathLogScreen extends Screen {
 
     private static final int PANEL_PADDING = 8;
+    /** Panels start below the Settings button, which sits in the top margin. */
+    private static final int PANEL_TOP = 24;
     private static final int ENTRY_HEIGHT = 24;
     /** Vanilla slot pitch: a 16px icon in an 18px cell. */
     private static final int SLOT_PITCH = 18;
@@ -107,7 +109,7 @@ public class DeathLogScreen extends Screen {
     @Override
     protected void init() {
         this.listX = PANEL_PADDING;
-        this.listY = PANEL_PADDING + 14;
+        this.listY = PANEL_TOP + 14;
         this.listWidth = Math.max(120, (int) (this.width * 0.32));
         this.listHeight = this.height - this.listY - PANEL_PADDING - 24;
 
@@ -142,7 +144,7 @@ public class DeathLogScreen extends Screen {
         addRenderableWidget(Button.builder(
                 Component.translatable("text.deathlogger.config.title"),
                 button -> this.minecraft.setScreen(new DeathLogConfigScreen(this))
-        ).bounds(this.width - PANEL_PADDING - 60, PANEL_PADDING - 6, 60, 16).build());
+        ).bounds(this.width - PANEL_PADDING - 60, 4, 60, 16).build());
 
         this.restoreButton.active = false;
         this.deleteButton.active = false;
@@ -214,11 +216,11 @@ public class DeathLogScreen extends Screen {
 
         // Stop short of the search box and the buttons: super has already drawn
         // them, and painting the translucent panel over a widget dims it.
-        graphics.fill(this.listX, PANEL_PADDING, this.listX + this.listWidth, this.searchBox.getY() - 2, PANEL_COLOR);
-        graphics.fill(this.detailX, PANEL_PADDING, this.detailX + this.detailWidth, this.detailBottom, PANEL_COLOR);
+        graphics.fill(this.listX, PANEL_TOP, this.listX + this.listWidth, this.searchBox.getY() - 2, PANEL_COLOR);
+        graphics.fill(this.detailX, PANEL_TOP, this.detailX + this.detailWidth, this.detailBottom, PANEL_COLOR);
 
         graphics.text(this.font, Component.translatable("text.deathlogger.death_list_title", this.visibleInfos.size()),
-                this.listX + 4, PANEL_PADDING + 3, 0xFFFFFFFF);
+                this.listX + 4, PANEL_TOP + 3, 0xFFFFFFFF);
 
         renderList(graphics, mouseX, mouseY);
 
@@ -263,7 +265,7 @@ public class DeathLogScreen extends Screen {
 
     private void renderDetail(GuiGraphicsExtractor graphics, DeathInfo info) {
         final int x = this.detailX + 4;
-        int y = PANEL_PADDING + 4;
+        int y = PANEL_TOP + 4;
 
         graphics.text(this.font, info.getTitle(), x, y, 0xFFFFFFFF);
         y += 14;
@@ -286,8 +288,11 @@ public class DeathLogScreen extends Screen {
 
         y += 6;
         y = renderInventory(graphics, info, x, y);
-        y = renderContainers(graphics, info, x, y);
-        renderScreenshot(graphics, x, y);
+        // Before the containers: their height depends on what the player carried,
+        // so giving them the remaining space first would often squeeze the
+        // screenshot out entirely.
+        y = renderScreenshot(graphics, x, y);
+        renderContainers(graphics, info, x, y);
     }
 
     /**
@@ -395,19 +400,39 @@ public class DeathLogScreen extends Screen {
         return null;
     }
 
-    private void renderScreenshot(GuiGraphicsExtractor graphics, int x, int y) {
-        if (this.screenshotTextureId == null) return;
-        if (y + 12 + this.screenshotHeight > this.detailBottom) return;
+    /**
+     * Draws the screenshot scaled to whatever vertical space is left, and returns
+     * the y to continue at. Shrinking beats the all-or-nothing height check this
+     * used to do, which dropped the image without a word whenever the entry had
+     * enough properties to push it down.
+     */
+    private int renderScreenshot(GuiGraphicsExtractor graphics, int x, int y) {
+        if (this.screenshotTextureId == null) return y;
 
         graphics.text(this.font, Component.translatable("text.deathlogger.death_screenshot"), x, y, 0xFFFFFFFF);
+        int imageY = y + 12;
+
+        int available = this.detailBottom - imageY - 4;
+        if (available < 16) return imageY;
+
+        int drawWidth = this.screenshotWidth;
+        int drawHeight = this.screenshotHeight;
+        if (drawHeight > available) {
+            float shrink = (float) available / drawHeight;
+            drawWidth = Math.max(1, Math.round(drawWidth * shrink));
+            drawHeight = available;
+        }
+
         graphics.blit(
                 RenderPipelines.GUI_TEXTURED, this.screenshotTextureId,
-                x, y + 12,
+                x, imageY,
                 0f, 0f,
-                this.screenshotWidth, this.screenshotHeight,
+                drawWidth, drawHeight,
                 this.screenshotSourceWidth, this.screenshotSourceHeight,
                 this.screenshotSourceWidth, this.screenshotSourceHeight
         );
+
+        return imageY + drawHeight + 6;
     }
 
     /**
