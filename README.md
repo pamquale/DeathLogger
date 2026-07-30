@@ -1,7 +1,7 @@
-> 💡 **Inspired by [DeathLog](https://github.com/glisco03/deathlog) by glisco03 — not a fork.** DeathLogger is written from scratch: its own storage format, networking, GUI and multiloader build, with no code carried over.
+>💡 **Inspired by [DeathLog](https://github.com/glisco03/deathlog) by glisco03 — not a fork.** DeathLogger is written from scratch: its own storage format, networking, GUI and multiloader build, with no code carried over.
 
 [![GitHub release](https://img.shields.io/github/v/release/pamquale/deathlogger?logo=github&style=for-the-badge)](https://github.com/pamquale/deathlogger/releases)
-[![Minecraft](https://img.shields.io/badge/Minecraft-26.1%20--%2026.2-green?style=for-the-badge)](https://minecraft.net)
+[![Minecraft](https://img.shields.io/badge/Minecraft-1.21.4%20--%2026.2-green?style=for-the-badge)](https://minecraft.net)
 [![Loaders](https://img.shields.io/badge/Fabric%20%7C%20NeoForge%20%7C%20Forge-orange?style=for-the-badge)](https://modrinth.com/mod/death-logger)
 
 An advanced death history mod. Keeps track of your deaths, restores inventory layouts, and saves coordinates. Essential for any survival world.
@@ -18,15 +18,9 @@ An advanced death history mod. Keeps track of your deaths, restores inventory la
 - 🖥️ **Server Support** — Dedicated servers keep their own logs, with `/deathlogger` commands to inspect and restore them
 
 ## 📸 Screenshots
+<img width="2560" height="1440" alt="Discord_ExCW7fMbu5" src="https://github.com/user-attachments/assets/7154cc24-8a8d-4314-91dd-a34c3b7eb58c" />
 
-## 📦 Compatibility
-
-| Minecraft | Fabric | NeoForge | Forge |
-| :-- | :--: | :--: | :--: |
-| 26.2 | ✅ | ✅ | — |
-| 26.1.2 | ✅ | ✅ | ✅ |
-| 26.1.1 | ✅ | ✅ | — |
-| 26.1 | ✅ | ✅ | — |
+<img width="2560" height="1440" alt="Discord_PjsERqPDlC" src="https://github.com/user-attachments/assets/256d783f-d274-433b-ab19-fa0e7c29719a" />
 
 Forge builds are published for 26.1.2 only. Forge has no recommended build for
 26.1 or 26.1.1, and those versions fail to start regardless of which mods are
