@@ -67,6 +67,8 @@ public class DeathLogScreen extends Screen {
     private String searchTerm = "";
     private int selectedIndex = -1;
     private int scrollOffset = 0;
+    private int detailScroll = 0;
+    private int detailContentHeight = 0;
     private boolean canRestore = true;
 
     private EditBox searchBox;
@@ -124,6 +126,7 @@ public class DeathLogScreen extends Screen {
             this.searchTerm = value.toLowerCase(Locale.ROOT);
             this.selectedIndex = -1;
             this.scrollOffset = 0;
+            this.detailScroll = 0;
             releaseScreenshot();
             rebuildVisible();
         });
@@ -233,8 +236,43 @@ public class DeathLogScreen extends Screen {
             return;
         }
 
-        renderDetail(graphics, info);
+        // The detail side scrolls, so it is drawn clipped and offset. The tooltip
+        // pass has to stay outside the scissor or it would be clipped too.
+        int top = PANEL_TOP + 4 - this.detailScroll;
+        graphics.enableScissor(this.detailX, PANEL_TOP, this.detailX + this.detailWidth, this.detailBottom);
+        int contentEnd = renderDetail(graphics, info, top);
+        graphics.disableScissor();
+
+        this.detailContentHeight = contentEnd - top;
+        clampDetailScroll();
+
+        renderDetailScrollbar(graphics);
         renderSlotTooltip(graphics, mouseX, mouseY);
+    }
+
+    private int detailViewportHeight() {
+        return this.detailBottom - PANEL_TOP - 8;
+    }
+
+    private int maxDetailScroll() {
+        return Math.max(0, this.detailContentHeight - detailViewportHeight());
+    }
+
+    private void clampDetailScroll() {
+        this.detailScroll = Math.clamp(this.detailScroll, 0, maxDetailScroll());
+    }
+
+    private void renderDetailScrollbar(GuiGraphicsExtractor graphics) {
+        int max = maxDetailScroll();
+        if (max == 0) return;
+
+        int trackHeight = detailViewportHeight();
+        int thumbHeight = Math.max(12, trackHeight * trackHeight / Math.max(1, this.detailContentHeight));
+        int thumbY = PANEL_TOP + 4 + (trackHeight - thumbHeight) * this.detailScroll / max;
+        int barX = this.detailX + this.detailWidth - 4;
+
+        graphics.fill(barX, PANEL_TOP + 4, barX + 2, PANEL_TOP + 4 + trackHeight, 0x33FFFFFF);
+        graphics.fill(barX, thumbY, barX + 2, thumbY + thumbHeight, 0xAAFFFFFF);
     }
 
     private void renderList(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
@@ -263,16 +301,17 @@ public class DeathLogScreen extends Screen {
         graphics.disableScissor();
     }
 
-    private void renderDetail(GuiGraphicsExtractor graphics, DeathInfo info) {
+    /** Draws the detail side starting at {@code top} and returns the y it ended at. */
+    private int renderDetail(GuiGraphicsExtractor graphics, DeathInfo info, int top) {
         final int x = this.detailX + 4;
-        int y = PANEL_TOP + 4;
+        int y = top;
 
         graphics.text(this.font, info.getTitle(), x, y, 0xFFFFFFFF);
         y += 14;
 
         if (info.isPartial()) {
             graphics.text(this.font, Component.translatable("text.deathlogger.death_info_loading"), x, y, 0xFFAAAAAA);
-            return;
+            return y + 11;
         }
 
         var left = info.getLeftColumnText();
@@ -288,11 +327,8 @@ public class DeathLogScreen extends Screen {
 
         y += 6;
         y = renderInventory(graphics, info, x, y);
-        // Before the containers: their height depends on what the player carried,
-        // so giving them the remaining space first would often squeeze the
-        // screenshot out entirely.
-        y = renderScreenshot(graphics, x, y);
-        renderContainers(graphics, info, x, y);
+        y = renderContainers(graphics, info, x, y);
+        return renderScreenshot(graphics, x, y);
     }
 
     /**
@@ -393,7 +429,14 @@ public class DeathLogScreen extends Screen {
         graphics.setTooltipForNextFrame(lines.stream().map(Component::getVisualOrderText).toList(), mouseX, mouseY);
     }
 
+    /**
+     * Slots are recorded at their scrolled positions, so one that has been scrolled
+     * out of the panel would still answer a hit test. Bound the search to the
+     * viewport.
+     */
     private ItemStack slotAt(int mouseX, int mouseY) {
+        if (mouseY < PANEL_TOP || mouseY > this.detailBottom) return null;
+
         for (var slot : this.slots) {
             if (slot.contains(mouseX, mouseY)) return slot.stack();
         }
@@ -401,10 +444,8 @@ public class DeathLogScreen extends Screen {
     }
 
     /**
-     * Draws the screenshot scaled to whatever vertical space is left, and returns
-     * the y to continue at. Shrinking beats the all-or-nothing height check this
-     * used to do, which dropped the image without a word whenever the entry had
-     * enough properties to push it down.
+     * Draws the screenshot at its full scaled size and returns the y it ended at.
+     * No fitting is needed any more: the panel scrolls, so overflowing is fine.
      */
     private int renderScreenshot(GuiGraphicsExtractor graphics, int x, int y) {
         if (this.screenshotTextureId == null) return y;
@@ -412,27 +453,16 @@ public class DeathLogScreen extends Screen {
         graphics.text(this.font, Component.translatable("text.deathlogger.death_screenshot"), x, y, 0xFFFFFFFF);
         int imageY = y + 12;
 
-        int available = this.detailBottom - imageY - 4;
-        if (available < 16) return imageY;
-
-        int drawWidth = this.screenshotWidth;
-        int drawHeight = this.screenshotHeight;
-        if (drawHeight > available) {
-            float shrink = (float) available / drawHeight;
-            drawWidth = Math.max(1, Math.round(drawWidth * shrink));
-            drawHeight = available;
-        }
-
         graphics.blit(
                 RenderPipelines.GUI_TEXTURED, this.screenshotTextureId,
                 x, imageY,
                 0f, 0f,
-                drawWidth, drawHeight,
+                this.screenshotWidth, this.screenshotHeight,
                 this.screenshotSourceWidth, this.screenshotSourceHeight,
                 this.screenshotSourceWidth, this.screenshotSourceHeight
         );
 
-        return imageY + drawHeight + 6;
+        return imageY + this.screenshotHeight + 6;
     }
 
     /**
@@ -501,6 +531,7 @@ public class DeathLogScreen extends Screen {
             if (index >= 0 && index < this.visibleInfos.size()) {
                 this.selectedIndex = index;
                 updateButtons();
+                this.detailScroll = 0;
                 requestFullInfo();
                 loadScreenshot(this.visibleInfos.get(index));
                 return true;
@@ -549,6 +580,14 @@ public class DeathLogScreen extends Screen {
             this.scrollOffset = Math.clamp(this.scrollOffset - (int) (deltaY * ENTRY_HEIGHT), 0, maxScroll);
             return true;
         }
+
+        if (mouseX >= this.detailX && mouseX <= this.detailX + this.detailWidth
+                && mouseY >= PANEL_TOP && mouseY <= this.detailBottom) {
+            this.detailScroll -= (int) (deltaY * SLOT_PITCH);
+            clampDetailScroll();
+            return true;
+        }
+
         return super.mouseScrolled(mouseX, mouseY, deltaX, deltaY);
     }
 
