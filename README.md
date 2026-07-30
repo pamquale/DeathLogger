@@ -1,7 +1,7 @@
 >💡 **Inspired by [DeathLog](https://github.com/glisco03/deathlog) by glisco03 — not a fork.** DeathLogger is written from scratch: its own storage format, networking, GUI and multiloader build, with no code carried over.
 
 [![GitHub release](https://img.shields.io/github/v/release/pamquale/deathlogger?logo=github&style=for-the-badge)](https://github.com/pamquale/deathlogger/releases)
-[![Minecraft](https://img.shields.io/badge/Minecraft-1.21.4%20--%2026.2-green?style=for-the-badge)](https://minecraft.net)
+[![Minecraft](https://img.shields.io/badge/Minecraft-1.21.3%20--%2026.2-green?style=for-the-badge)](https://minecraft.net)
 [![Loaders](https://img.shields.io/badge/Fabric%20%7C%20NeoForge%20%7C%20Forge-orange?style=for-the-badge)](https://modrinth.com/mod/death-logger)
 
 An advanced death history mod. Keeps track of your deaths, restores inventory layouts, and saves coordinates. Essential for any survival world.
