@@ -4,6 +4,7 @@ import com.glisco.deathlog.DeathLog;
 import com.glisco.deathlog.platform.Services;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Screenshot;
+import net.minecraft.util.Util;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -37,14 +38,16 @@ public final class DeathScreenshots {
         var fileName = UUID.randomUUID() + ".png";
         var target = resolve(fileName);
 
-        Screenshot.takeScreenshot(client.getMainRenderTarget(), image -> {
+        // The callback lands on the render thread; encoding a PNG there is what
+        // made the game hitch at the moment of death. Hand it to the IO pool.
+        Screenshot.takeScreenshot(client.getMainRenderTarget(), image -> Util.ioPool().execute(() -> {
             try (image) {
                 Files.createDirectories(target.getParent());
                 image.writeToFile(target);
             } catch (IOException e) {
                 DeathLog.LOGGER.error("Failed to write the death screenshot", e);
             }
-        });
+        }));
 
         return fileName;
     }

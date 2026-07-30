@@ -31,6 +31,7 @@
   "text.deathlogger.config.legacy_detection": "Legacy death detection",
   "text.deathlogger.config.legacy_detection.tooltip": "Also record deaths from health updates, for servers that suppress the death message. May produce false positives.",
   "deathlogger.deathinfoproperty.screenshot": "Screenshot",
+  "text.deathlogger.action.give_item.hint": "Middle-click to copy a /give command",
   "text.deathlogger.action.give_item.copied": "[DeathLogger] Copied a /give command to the clipboard",
 
   "key.deathlogger.death_screen": "Open DeathLogger",

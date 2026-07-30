@@ -5,6 +5,7 @@ import com.glisco.deathlog.DeathLogCommon;
 import com.glisco.deathlog.client.ClientDeathLogStorage;
 import com.glisco.deathlog.client.DeathLogClient;
 import com.glisco.deathlog.client.DeathLogClientNetworking;
+import com.glisco.deathlog.fabric.compat.BetterStatsIntegration;
 import com.glisco.deathlog.fabric.network.DeathLogPayloads;
 import com.glisco.deathlog.mixin.MinecraftServerAccessor;
 import com.glisco.deathlog.storage.DirectDeathLogStorage;
@@ -36,6 +37,7 @@ public class DeathLoggerFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         KeyMappingHelper.registerKeyMapping(OPEN_DEATH_SCREEN);
+        BetterStatsIntegration.init();
 
         ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
             storage = createStorage(client);
