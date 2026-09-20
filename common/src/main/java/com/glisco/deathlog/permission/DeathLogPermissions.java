@@ -28,10 +28,10 @@ public final class DeathLogPermissions {
     private DeathLogPermissions() {}
 
     public static boolean has(ServerPlayer player, String node) {
-        return player.permissions().hasPermission(OPERATOR);
+        return player.permissions().hasPermission(node);
     }
 
     public static Predicate<CommandSourceStack> require(String node) {
-        return source -> source.permissions().hasPermission(OPERATOR);
+        return source -> source.permissions().hasPermission(node);
     }
 }
